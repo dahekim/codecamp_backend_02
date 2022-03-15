@@ -28,4 +28,4 @@ export function createMasking(regiNum){
      }
     
      console.log(firstNum+"-"+maskingNum+"******")
-    }
+}

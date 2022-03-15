@@ -41,7 +41,7 @@ function createTokenOfPhone(phNum){
 
     // 3. 생성된 토큰을 입력된 핸드폰 번호에 전송하기
     sendTokenToSMS(phNum,myToken)
-    }                                               // d아니라면 1. 에서 함수 종료
+    }                                               // 아니라면 1. 에서 함수 종료
 }
 
 createTokenOfPhone("01043438846");
