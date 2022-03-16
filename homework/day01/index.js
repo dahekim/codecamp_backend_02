@@ -1,18 +1,16 @@
-import{ validNumCount, withHypen , createMasking } from "./resident-registration-number.js"
+// facade 구조로 변경
 
+import { withHypen, validNumCount, createMasking} from "./resident-registration-number.js"
 
 function maskingRegiNum(regiNum){
-    // 1. 주민등록번호 앞자리 뒷자리 숫자 갯수 확인
-    const isValid = validNumCount(regiNum)
-
-    // 2. 주민등록번호 가운데에 '-' 있는지 확인
-    if(isValid===true){
-        withHypen(regiNum)                             
+   const isValid_1 = withHypen(regiNum)                 // 검증1: withHypen이 true일 때 validNumCount 실행, false라면 함수 종료
+   if (isValid_1){
+       const isValid_2 = validNumCount(regiNum)         // 검증2: validNumCount가 true일 때 creatMasking 실행, false라면 함수 종료
+       if (isValid_2){
+           createMasking(regiNum)
     }
-    
-    // 3. 주민등록번호 뒷자리의 맨 앞 숫자 빼고 마스킹
-    createMasking(regiNum)       
-
+   }   
 }
 
-maskingRegiNum("930315-2222222")
+const regiNum = "930315-2222222"
+maskingRegiNum(regiNum)
