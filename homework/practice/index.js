@@ -1,7 +1,10 @@
 function withHypen(regiNum){
     if(regiNum.includes("-") !== true){
         console.log("에러발생! 형식이 올바르지 않습니다.")
-        return
+        return false
+    }
+    else {
+        return true
     }
 }
 
@@ -33,11 +36,10 @@ function createMasking(regiNum){
 function maskingRegiNum(regiNum){
    withHypen(regiNum)
    const isValid = validNumCount(regiNum)
-   if (isValid === true){
+   if (isValid){
     createMasking(regiNum)
    }
 }
 
-
-const regiNum = "93031502222222"
+const regiNum = "9303152222222"
 maskingRegiNum(regiNum)
