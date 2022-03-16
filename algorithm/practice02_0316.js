@@ -5,10 +5,10 @@ function evenOdd(num){
     console.log("Zero")    
   }
   else if (num%2 === 0){
-    console.log("짝수")
+    console.log("Even")
   }
-  else{
-    console.log("홀수")
+  else if (num%2 === 1){
+    console.log("Odd")
   }    
 }
 evenOdd(0) //Zero
