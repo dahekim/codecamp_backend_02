@@ -8,16 +8,17 @@
 
 function makeOdd(num){
   let str=''
-  let count = 0
+  let count = 0                 // 굳이 count로 안 받아도 될듯 ㅠ
   for (let i = 1; i<=num ;i++)
   if(i%2===1){
     count = i
     str+=count
   }
-  else{
+  else{                         //else도 굳이 안해도 됨...
     str+=''
   }
   console.log(str)
+//return str
 }
 
 makeOdd(9)  //135

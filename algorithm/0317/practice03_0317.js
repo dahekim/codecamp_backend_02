@@ -6,19 +6,27 @@
 
 
 function makeNumber(num){
-  let str ='';
-  let count = 0
+  let str =''
   
   for(let i = 1; i <=num; i++){
     if(i<num){
-      count=i
-    str += count+'-'
+    str += i+'-'
     }
     else if (i=num){
-      str += count+1
+      str += i
       console.log(str)
     }    
   }
 }
 
-makeNumber(5)     // 1-2-3-4-5
+makeNumber(10)     // 1-2-3-4-5
+
+/*
+for (i = 1; i<=num; i++){
+  str +=i;
+  if(i!==num){
+    str+="="
+  }
+  return str;
+}
+*/

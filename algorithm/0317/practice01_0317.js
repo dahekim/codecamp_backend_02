@@ -5,11 +5,18 @@
 //for을 이용해서 문제 풀기
 
 function sum(num){
-    let count = 0
+    let count = 0     // 1~num까지의 숫자
+/*    
     for(let i = 0; i <=num ; i++)
     count = count +i
-    console.log(count)    
+*/
+
+  for(let i = 1; i<=num ; i++){
+    count += i
   }
+return count
+//    console.log(count)    
+}
 
 sum(5)     //15
 sum(2)      //3
