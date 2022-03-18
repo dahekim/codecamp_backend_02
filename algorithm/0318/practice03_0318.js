@@ -7,7 +7,7 @@
 
 function solution(s){  
 	var answer = s.toString()
-  return answer
+  console.log(answer)
 }
 
 
