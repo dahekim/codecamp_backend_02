@@ -20,7 +20,7 @@
  *                                      name:
  *                                          type: string
  *                                          example: 아메리카노
- *                                      calorie:
+ *                                      kcal:
  *                                          type: int
  *                                          example: 250
  *                                      
