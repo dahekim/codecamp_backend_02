@@ -27,3 +27,32 @@ function grade(score){
 	}
 
 }
+
+//예외처리 먼저 할 것!! 
+
+function grade(score){
+	if(score > 100 || score < 0 ){
+		return "잘못된 점수입니다."
+		}
+	// 90 ~100
+		else if(score>=90){
+		return "A"
+	}
+	// 80 ~ 89
+	else if(score>=80){
+		return "B"
+	}
+	// 70 ~ 79
+	else if(score>=70){
+		return "C"
+	}
+	// 60 ~ 69
+	else if(score>=60){
+		return "D"
+	}
+	else{
+		return score = "F"
+	}
+
+}
+grade(25) //'F'

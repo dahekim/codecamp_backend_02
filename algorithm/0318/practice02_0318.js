@@ -22,15 +22,15 @@ const myShopping = [
 	{ category: "의류", price: 10000　 },
 ]
 
-let count=0
-let total=0
-let grade=''
+let count=0		// 구매 회수
+let total=0		// 총 금액
+let grade=''	//최종 등급
 
 
-for(let i = 0; i<10; i++){
+for(let i = 0; i<myShopping.length; i++){
   if(myShopping[i].category === "의류"){
-    count = count +1
-    total = total + myShopping[i].price  
+    count += +1
+    total += myShopping[i].price  
   }
 }
 

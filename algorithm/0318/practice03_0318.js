@@ -4,13 +4,10 @@
 // s는 부호와 숫자로만 이루어져있습니다.
 // s는 "0"으로 시작하지 않습니다.
 
-
 function solution(s){  
-	var answer = s.toString()
-  console.log(answer)
+    s = Number(s)
+	return s
 }
 
-
-
-solution("1234") //1234
-solution("-1234") //-1234
+solution("1234")
+solution("-1234") 
