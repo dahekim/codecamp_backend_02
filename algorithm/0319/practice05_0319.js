@@ -3,7 +3,11 @@
 // solution 함수를 완성해주세요.
 function solution(element, index, array) {
   console.log(index)
-  // 여기에서 작업하세요.
+  if(element === null){
+    console.log("404 ERROR")
+    return true
+    
+  }
 }
 
 const inputs = {
