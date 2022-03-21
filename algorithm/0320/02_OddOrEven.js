@@ -18,6 +18,18 @@ function solution(num) {
   solution(0)		//'Even'
   solution(3)		//'Odd'
 
+//리팩토링
+/*
+function solution(num) {
+  if (num %2 ===0){
+    return "Even"
+  }
+  return  "Odd"
+  } 
+}
+*/
+
+
 //삼항 연산자를 이용한 다른 풀이
   /*
   function evenOrOdd(num) {

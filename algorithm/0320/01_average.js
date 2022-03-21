@@ -7,6 +7,8 @@ function arrAverage(arr) {
 // const arr = [5,5]       // '5'
 arrAverage(arr)
 
+
+
 /*
 다른 풀이
 
@@ -15,3 +17,20 @@ function average(array){
 }
 
 */
+
+/*
+function solution(arr){
+  let sum = 0
+  for (let i = 0; i <arr.length; i++){
+    sum += arr[i]
+  }
+  //총 합에서 배열의 길이만큼 나누기
+  return sum/arr.length
+}
+*/
+
+function solution(arr){
+  const sum = arr.reduce((acc,cur) =>{
+    
+  }, 0)
+}
