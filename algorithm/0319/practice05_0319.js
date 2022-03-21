@@ -5,8 +5,7 @@ function solution(element, index, array) {
   console.log(index)
   if(element === null){
     console.log("404 ERROR")
-    return true
-    
+    return true  
   }
 }
 

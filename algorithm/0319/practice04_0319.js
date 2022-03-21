@@ -10,3 +10,17 @@ const arr = ['1', '2', '3'];
 const result = arr.map(solution);
 console.log(result); // [1, 2, 3]
 
+
+//만약에 배열의 마지막 요소만 숫자로 바꾸고 싶다면?
+/*
+function solution(element, index, array) {
+  if (index === arr.length-1){
+    element = Number(arr[arr.length-1])
+  }
+  return element;         
+}
+
+const arr = ['1', '2', '3'];
+const result = arr.map(solution);
+console.log(result); // ['1', '2', 3]
+*/
