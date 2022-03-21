@@ -3,14 +3,17 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import { options } from './swagger/config.js'
 
+import cors from 'cors'
+
 const app = express()
 const port = 3001
+app.use(cors())
 app.use( express.json())    
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 
 // 회원목록 조회 API
-app.get('/users', (req, res) => {
+app.get('/users', (req,res) => {
     const result = [
         {
             email : "aaa@gmail.com", 
@@ -48,12 +51,12 @@ app.get('/users', (req, res) => {
 	        prefer : "https://notion.so"
         }     
     ]
-  res.send(result)
+    res.send(result)
   })
 
 // 커피목록 조회 API
 app.get('/starbucks', (req, res) => {
-    const result = [
+    const result2 = [
         {name: "아메리카노", kcal: 5},
         {name: "카페라떼", kcal: 250},
         {name: "녹차프라푸치노", kcal: 650},
@@ -65,10 +68,8 @@ app.get('/starbucks', (req, res) => {
         {name: "연유라떼", kcal: 450},
         {name: "딸기프라푸치노", kcal: 500}
     ]
-  res.send(result)
+    res.send(result2)  
   })
-
-
 
 
   app.listen(port, () => {

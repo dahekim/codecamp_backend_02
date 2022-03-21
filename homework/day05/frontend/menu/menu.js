@@ -1,8 +1,12 @@
 // 커피 목록 조회 API를 요청해주세요.
-const getCoffee = () => {
-  // 받은 데이터로 createMenuCard 함수를 이용해
-  // 메뉴 카드를 만들어주세요.
-  createMenuCard()
+function getCoffee(){
+  axios.get("http://localhost:3001/starbucks",{})
+  .then((res) => {
+    console.log(res.data)
+    for (let i =0 ; i < 10; i++ ){
+      createMenuCard(res.data[i])
+    }
+    })  
 }
 
 const createMenuCard = (data) => {
@@ -25,4 +29,5 @@ const createMenuCard = (data) => {
   menuCardWrapper.appendChild(menuCardName)
   menuCardWrapper.appendChild(menuCardInfo)
   menuWrapper.appendChild(menuCardWrapper)
+
 }
