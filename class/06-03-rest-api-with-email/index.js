@@ -1,12 +1,13 @@
 import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
+import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js";
 
-
-
-//const express = require('express')
 import express from "express"
-import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from 'swagger-jsdoc'
-import { options }from './swagger/config.js'
+import swaggerUi from "swagger-ui-express"
+import swaggerJsdoc from "swagger-jsdoc"
+import { options }from "./swagger/config.js"
+
+import dotenv from "dotenv"
+dotenv.config()
 
 
 const app = express()
@@ -42,7 +43,7 @@ res.send('게시물이 등록되었습니다.')
 
 
 app.post('/tokens/phone',(req,res)=>{
-  const phNum = req.body.aaa
+  const phNum = req.body.aaa  //postman에서 aaa의 body 안에 담은 핸드폰 번호를 백엔드 서버로 보냄
 
       const isValid = checkValidationPh(phNum)
     
@@ -55,6 +56,27 @@ app.post('/tokens/phone',(req,res)=>{
       }
 
 })
+
+
+
+
+//가입환영 템플릿 이메일 전송 api
+app.post("/users" ,  (req,res) => {
+  const myuser = req.body.user
+
+  // 1. 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
+  const isValid = checkValidationEmail(myuser.email)
+
+  if (isValid===true){
+    // 2. 가입환영 템플릿을 만들기
+    const mytemplate=getWelcomeTemplate(myuser)
+
+    // 3. 사용자가 등록한 이메일로 가입환영 템플릿을 전송하기
+    // (~~에 ~~를 전송했습니다. 형식)
+    sendTemplateToEmail(myuser.email,mytemplate)
+  }
+}                                   // 미들웨어 함수
+)
 
 
 /*

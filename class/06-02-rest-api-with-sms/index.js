@@ -4,10 +4,18 @@ import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
 
 //const express = require('express')
 import express from "express"
-import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from 'swagger-jsdoc'
-import { options }from './swagger/config.js'
+import swaggerUi from "swagger-ui-express"
+import swaggerJsdoc from "swagger-jsdoc"
+import { options }from "./swagger/config.js"
 
+import dotenv from "dotenv"
+dotenv.config()
+
+/*
+dotenv.config(process.env.SMS_APP_KEY)             // dotenv 라이브러리를 통해서 .env에 있는 key...들을 읽어올 수 있게
+dotenv.config(process.env.SMS_X_SECRET_KEY)
+dotenv.config(process.env.SMS_SENDER)
+*/
 
 const app = express()
 const port = 3000
@@ -42,7 +50,7 @@ res.send('게시물이 등록되었습니다.')
 
 
 app.post('/tokens/phone',(req,res)=>{
-  const phNum = req.body.aaa
+  const phNum = req.body.aaa  //postman에서 aaa의 body 안에 담은 핸드폰 번호를 백엔드 서버로 보냄
 
       const isValid = checkValidationPh(phNum)
     
