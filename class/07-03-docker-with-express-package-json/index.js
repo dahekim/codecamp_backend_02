@@ -11,7 +11,7 @@ dotenv.config()
 
 
 const app = express()
-const port = 3000
+const port = 3005
 app.use( express.json())    //전송되는 데이터를 json형태로 바꿔줌 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
