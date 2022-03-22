@@ -79,7 +79,7 @@ app.get('/starbucks', (req, res) => {
   })
 
   app.post("/tokens/phone",(req,res)=>{
-    const phNum = req.body.aaa  //postman에서 aaa의 body 안에 담은 핸드폰 번호를 백엔드 서버로 보냄
+    const phNum = req.body.totalNum  //postman에서 totalNum의 body 안에 담은 핸드폰 번호를 백엔드 서버로 보냄
   
         const isValid = checkValidationPh(phNum)      
         if (isValid===true){
@@ -92,7 +92,7 @@ app.get('/starbucks', (req, res) => {
   
   
   //가입환영 템플릿 이메일 전송 api
-  app.post("/users" ,  (req,res) => {
+  app.post("/users" ,  (req,res) => {   ///이걸 보내줘~
     const myUser = req.body.user
   
     // 1. 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
@@ -106,6 +106,7 @@ app.get('/starbucks', (req, res) => {
       // (~~에 ~~를 전송했습니다. 형식)
       sendTemplateToEmail(myUser.email,myTemplate)
     }
+    res.send("이메일을 전송했습니다.")
   }                                   
   )
 
