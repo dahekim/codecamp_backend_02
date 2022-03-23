@@ -49,7 +49,7 @@ function solution (array,commands){
     return answer
 }
 
-// 고친 코드ㅠㅠ 이게 최종
+// 고친 코드ㅠㅠ 이게
 
 let answer = []
 function solution(array,commands){
