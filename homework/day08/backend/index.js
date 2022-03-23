@@ -95,7 +95,7 @@ app.get('/starbucks', (req, res) => {
           }
         // 토큰 먼저 생성 하고 DB단 일 정하기
 
-        const equalNum = await Tokens.findOne( {phone : req.body.phone} )
+        const equalNum = await Tokens.findOne( {phone : req.body.phone} ) // 객체로 나옴!
         if(equalNum === null){      // DB에 내 번호가 없으면 새로 생성
           const tokens = new Tokens({
             phone: phNum,
@@ -109,9 +109,23 @@ app.get('/starbucks', (req, res) => {
           await Tokens.updateOne( { phone: phNum } ,  { token: myToken}  ) 
         }
 
-    })  
+    })
+
   
-  
+
+  // 2번 PATCH API
+app.patch("/tokens/phone",async (req,res) => {
+  const myPhNum = await Tokens.findOne( {phone : req.body.phone} )
+
+  if(req.body.phone !== myPhNum.phone ||  req.body.token !== myPhNum.token){
+    res.send("false")
+  }
+  else{
+    await Tokens.updateOne( { phone : req.body.phone } ,  { isAuth: true }  )
+    res.send("true")
+  }
+})
+
   
   //가입환영 템플릿 이메일 전송 api
   app.post("/users" ,  (req,res) => {   ///이걸 보내줘~
