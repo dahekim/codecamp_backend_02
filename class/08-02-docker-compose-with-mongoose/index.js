@@ -22,7 +22,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 app.get('/boards', async (req, res) => {
   // 1. 데이터를 조회하는 로직 => DB에 접속해서 데이터 꺼내오기
   // 꺼낸 데이터를 담기
-  const result = await Board.find({writer : "다혜"})         // DB에 접속해서 찾을때까지 기다리고 
+  const result = await Board.find({})         // DB에 접속해서 찾을때까지 기다리고 
 
   // 2. 꺼내온 결과를 응답해주기
 res.send(result)
