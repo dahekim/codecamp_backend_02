@@ -15,7 +15,7 @@ function solution(n)
 solution(123) ///6
 solution(987) //24
 
-//다른 사람 풀이
+//다른  풀이
 /*
 function solution(n){
     // 쉬운방법
