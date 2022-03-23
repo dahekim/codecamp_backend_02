@@ -83,21 +83,32 @@ app.get('/starbucks', (req, res) => {
   app.post("/tokens/phone",async (req,res) => {
     const phNum = req.body.phone  //postman에서 totalNum의 body 안에 담은 핸드폰 번호를 백엔드 서버로 보냄
 
-        const isValid = checkValidationPh(phNum)    //d
+        const isValid = checkValidationPh(phNum)
 
+        let myToken = ''
         if (isValid===true){
-        const myToken = getToken()   
-        sendTokenToSMS(phNum,myToken)
+          myToken = getToken()    
+          
+          sendTokenToSMS(phNum,myToken)
+        
+          res.send("인증완료!")
+          }
+        // 토큰 먼저 생성 하고 DB단 일 정하기
 
-        const tokens = new Tokens({
-          phone: phNum,
-          token: myToken,
-          isAuth: false
-        }) 
-
-        await tokens.save()
-        res.send("인증완료!")
+        const equalNum = await Tokens.findOne( {phone : req.body.phone} )
+        if(equalNum === null){      // DB에 내 번호가 없으면 새로 생성
+          const tokens = new Tokens({
+            phone: phNum,
+            token: myToken,
+            isAuth: false
+        })
+        await tokens.save() 
         }
+
+        else {                      // DB에 내 번호가 있으면 토큰만 수정
+          await Tokens.updateOne( { phone: phNum } ,  { token: myToken}  ) 
+        }
+
     })  
   
   
