@@ -109,10 +109,8 @@ app.post('/user', async (req, res) => {
 
 
     res.send("회원가입이 완료되었습니다.")
-    // . DB에 등록된 '_id'값을 불러오기
-    //const userID = await Users.find ( { _id: req.body._id } )
-    // . Postman의 응답란에 띄우기
-    //res.send(userID)    
+    // . DB에 등록된 '_id'값을 불러오고 응답란에 _id 띄우기
+    //res.send(gg)    
   }
 })
 
