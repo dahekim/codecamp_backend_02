@@ -1,5 +1,5 @@
 import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
-import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
+// import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
 import { withHypen, validNumCount, createMasking } from "./resident-registration-number.js"
 import { getOgAPI } from "./cheerio.scraping.js"
 
@@ -85,7 +85,7 @@ app.post('/user', async (req, res) => {
     })
     await users.save()   
 
-    
+    /*
     // 6. 이메일 인증
     const userMail  = req.body.email
     const myUser = req.body.user
@@ -98,26 +98,24 @@ app.post('/user', async (req, res) => {
       const userName = req.body.name
       const userPhNum = req.body.phone
       const userRegiNum =req.body.prefer
+
       const myTemplate = getWelcomeTemplate(  userName, userPhNum, userRegiNum )
   
       // 3- 사용자가 등록한 이메일로 가입환영 템플릿을 전송
       sendTemplateToEmail( userMail , myTemplate )
     }
-    
-    
-   
-
+*/
     // 8. 주민등록번호마스킹, 빈 객체값이었던 og에 값 넣어줌
     await Users.updateOne( { personal : req.body.personal } ,  { personal: maskingRegiNum } )
     await Users.updateOne( { phone : req.body.phone } , { og : openGraph }  )
 
 
-    res.send("회원가입이 완료되었습니다.")
+    
     // . DB에 등록된 '_id'값을 불러오고 응답란에 _id 띄우기
-    // res.send(오브젝트아이디 str값 보여주기)    
+    let userObId = await Users.findOne( { phone : req.body.phone } ) // Users.findOne({ phone: '01043438846' })
+    res.send(`${userObId._id}`)    
   }
 })
-
 
 
 // 커피목록 조회 API
@@ -140,7 +138,8 @@ app.post("/tokens/phone",async (req,res) => {
     myToken = getToken()
     sendTokenToSMS(phNum,myToken)
     
-    res.send("인증완료!")
+    console.log(myToken)
+    res.send("인증번호가 전송되었습니다.")
   }
 
 
@@ -175,31 +174,18 @@ app.patch("/tokens/phone",async (req,res) => {
   }
 })
 
-  
-//가입환영 템플릿 이메일 전송 API
-app.post("/user" ,  (req,res) => {   ///이걸 보내줘~
-  const userMail = req.body.email
-  // 1. 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
-  const isValid = checkValidationEmail( userMail )
-  
-    if (isValid){
-      // 2. 가입환영 템플릿을 만들기
-      const myTemplate = getWelcomeTemplate(req.body.name, req.body.phNum, req.body.prefer )
-  
-      // 3. 사용자가 등록한 이메일로 가입환영 템플릿을 전송하기`
-      sendTemplateToEmail(userMail,myTemplate)
-    }
-    res.send(userMail, myTemplate)
-    res.send(`${req.body.name}님에게 가입환영 메일을 전송했습니다.`)
-  })
-
 
 // 몽고DB 접속 
 mongoose.connect("mongodb://my-database:27017/mini_project")
 
   app.listen(port, () => {
     console.log(`########################################`)
-    console.log(`### ${port}번 포트로 연결합니다. ###`)
+    console.log(`########################################`)
+    console.log(`########################################`)
+    console.log(`###### ${port}번 포트로 연결합니다. ######`)
+    console.log(`########################################`)
+    console.log(`########################################`)
+    console.log(`########################################`)
     console.log(`########################################`)
  
   })

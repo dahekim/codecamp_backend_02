@@ -34,7 +34,7 @@
  *                                          example: https://netflix.com
  *                                      pwd:
  *                                          type: string
- *                                          example: qwer1234"
+ *                                          example: "qwer1234"
  *                                      og:
  *                                          type: object
  *                                          properties:
@@ -49,7 +49,6 @@
  *                                                  example: "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png
  *                                              
  */
-
 /**
  * @openapi
  * /user:

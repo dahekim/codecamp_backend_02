@@ -6,6 +6,6 @@ export const options = {
         version: '1.0.0',
       },
     },
-    apis: ['./*.swagger.js'], // files containing annotations as above
+    apis: ['./swagger/*.swagger.js'], // files containing annotations as above
   };
   

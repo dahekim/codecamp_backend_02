@@ -11,7 +11,6 @@ services:
             - ./phone.js:/myfolder/phone.js
             - ./resident-registration-number.js:/myfolder/resident-registration-number.js
             - ./cheerio.scraping.js:/myfolder/cheerio.scraping.js
-
         ports:
           - 3005:3005
 
