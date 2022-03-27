@@ -3,9 +3,7 @@ import mongoose from 'mongoose'
 
 import { Starbucks } from "./models/starbucks.model.js" 
 
-mongoose.connect("mongodb://localhost:3005/mini_project")
-
-
+mongoose.connect("mongodb://localhost:27117/mini_project")
 
 async function startCrawling(){
     // 퍼펫티어로 크로미움 실행 
