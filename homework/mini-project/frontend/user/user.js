@@ -1,6 +1,6 @@
 // 회원 목록 조회 API를 요청해주세요.
 function getUser(){
-  axios.get("http://localhost:3001/users",{})
+  axios.get("http://localhost:3005/users",{})
   .then((res) => {
     console.log(res.data)
     for (let i =0 ; i < 5; i++ ){

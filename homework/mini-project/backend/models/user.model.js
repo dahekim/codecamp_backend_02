@@ -7,7 +7,11 @@ const userSchema = new mongoose.Schema({
     prefer : String,
     pwd: String,
     phone: String,
-    og: Object
+    og: {
+        title: String,
+        description: String,
+        image: String
+    }
 })
 
 export const Users = mongoose.model("Users", userSchema)

@@ -25,5 +25,5 @@ export function validNumCount(regiNum){
 export function createMasking(regiNum){
     const firstNum = regiNum.split("-")[0]
 
-    return maskingNum = ( `${ firstNum }-*******` )
+    return ( `${ firstNum }-*******` )
 }

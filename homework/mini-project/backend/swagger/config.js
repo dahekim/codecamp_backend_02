@@ -2,7 +2,7 @@ export const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: '숙제_카페회원명단',
+        title: '미니프로젝트-김다혜',
         version: '1.0.0',
       },
     },

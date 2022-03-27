@@ -1,6 +1,6 @@
 // 커피 목록 조회 API를 요청해주세요.
 function getCoffee(){
-  axios.get("http://localhost:3001/starbucks",{})
+  axios.get("http://localhost:3005/starbucks",{})
   .then((res) => {
     console.log(res.data)
     for (let i =0 ; i < 10; i++ ){

@@ -14,12 +14,7 @@ export function checkValidationEmail(email){
 
 }
 
-export function getWelcomeTemplate({name,phNum,fvSite}){
-    const aaa = new Date()
-    const yyyy = aaa.getFullYear()
-    const mm = String(aaa.getMonth()+1).padStart(2,"0")
-    const dd = String(aaa.getDate()).padStart(2,"0")
-
+export function getWelcomeTemplate( { name, phNum, fvSite } ){
     const createdAt = getToday()
 
     return `<html>
@@ -27,7 +22,7 @@ export function getWelcomeTemplate({name,phNum,fvSite}){
                     <h1>${name} 님 가입을 환영합니다.</h1>
                     <hr>
                     <div>이름: ${name}</div>
-                    <div>전화번호: ${phNum}세</div>
+                    <div>전화번호: ${phNum}</div>
                     <div>좋아하는 사이트: ${fvSite}</div>
                     <div>가입일:${createdAt}  </div>
                 </body>
@@ -55,7 +50,4 @@ export async function sendTemplateToEmail(email,myTemplate){
             }
         }
     )
-
-    console.log("가입 완료!")
-    // console.log(`${email}로 ${mytemplate}을 전송합니다.`)
 }

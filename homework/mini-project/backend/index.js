@@ -1,7 +1,8 @@
-import { checkValidationPh, getToken } from "./phone.js"
+import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
 import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
-import { createMasking } from "./resident-registration-number.js"
-//import { createUsersAPI } from "./cheerio.scraping.js"
+import { withHypen, validNumCount, createMasking } from "./resident-registration-number.js"
+import { getOgAPI } from "./cheerio.scraping.js"
+
 
 import express from "express"
 import swaggerUi from 'swagger-ui-express'
@@ -35,11 +36,11 @@ app.get('/users', async (req,res) => {
 
 
 
-// 회원 가입 API
+// 회원 가입 API (이메일 인증 포함)
 app.post('/user', async (req, res) => {
   const phNumInToken = await Tokens.findOne( { phone : req.body.phone } )
   const phNumInUsers = await Users.findOne( { phone : req.body.phone } )
-   
+
 
   if(phNumInToken === null){
     res.send("먼저 인증을 진행해주세요.") 
@@ -66,27 +67,53 @@ app.post('/user', async (req, res) => {
   // 데이터를 등록하는 로직 수행 => DB에 접속해서 데이터 저장하기
   else
   { 
-    // 4. 내가 좋아하는 사이트로 입력받은 사이트를 스크래핑 
-//    createUsersAPI(req.body.prefer)
-
-    // 5. 주민등록번호 검증 및 마스킹
+    // 4. 주민등록번호 검증 및 마스킹
     const regiNum = req.body.personal 
-    const maskingRegiNum = createMasking(regiNum)
-  
-    await Users.updateOne( { phone : req.body.phone } ,  { personal: maskingRegiNum } )
     
+    const isValid_1 = withHypen(regiNum)
+    if (isValid_1){
+      const isValid_2 = validNumCount(regiNum)
+      if (isValid_2){
+        createMasking(regiNum)
+        }
+      }
+    const maskingRegiNum = createMasking(regiNum)  
+    await Users.updateOne( { phone : req.body.phone } ,  { personal: maskingRegiNum } )
 
-    // 임시 저장된 데이터를 users에 담기
+    // 5. 내가 좋아하는 사이트로 입력받은 사이트를 스크래핑, DB에 og 정보 업데이트
+    const fvSite= req.body.prefer
+    const perferOgs = getOgAPI(fvSite)
+    
+    await Users.updateOne( { phone : req.body.phone } , { og : perferOgs }  )
+    // . 임시 저장된 데이터를 users에 담기
     const users = new Users({
       ...req.body 
     })
 
-    // 2. 저장결과를 알려주기
-    res.send("회원가입이 완료되었습니다.")
-//    res.send(${})   // _id값 반환
+    // . user 정보를 저장
     await users.save()
-  }
 
+    // . 이메일 인증
+    const userMail = req.body.email
+    // 1- 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
+    const isValid = checkValidationEmail( userMail )
+  
+    if (isValid){
+      // 2- 가입환영 템플릿을 만들기
+      const myTemplate = getWelcomeTemplate( users.name, users.phNum, users.prefer )
+  
+      // 3- 사용자가 등록한 이메일로 가입환영 템플릿을 전송
+      sendTemplateToEmail(userMail,myTemplate)
+    }
+
+
+
+    res.send("회원가입이 완료되었습니다.")
+    // . DB에 등록된 '_id'값을 불러오기
+    //const userID = await Users.find ( { _id: req.body._id } )
+    // . Postman의 응답란에 띄우기
+    //res.send(userID)    
+  }
 })
 
 
@@ -109,7 +136,7 @@ app.post("/tokens/phone",async (req,res) => {
   let myToken = ''
   if (isValid===true){
     myToken = getToken()
-//    sendTokenToSMS(phNum,myToken)
+    sendTokenToSMS(phNum,myToken)
     
     res.send("인증완료!")
   }
@@ -148,20 +175,20 @@ app.patch("/tokens/phone",async (req,res) => {
 
   
 //가입환영 템플릿 이메일 전송 API
-app.post("/users" ,  (req,res) => {   ///이걸 보내줘~
-  const myUser = req.body.email
+app.post("/user" ,  (req,res) => {   ///이걸 보내줘~
+  const userMail = req.body.email
   // 1. 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
-  const isValid = checkValidationEmail(myUser.email)
+  const isValid = checkValidationEmail( userMail )
   
-    if (isValid===true){
+    if (isValid){
       // 2. 가입환영 템플릿을 만들기
-      const myTemplate=getWelcomeTemplate(myUser)
+      const myTemplate = getWelcomeTemplate(req.body.name, req.body.phNum, req.body.prefer )
   
-      // 3. 사용자가 등록한 이메일로 가입환영 템플릿을 전송하기
-      // (~~에 ~~를 전송했습니다. 형식)
-      sendTemplateToEmail(myUser.email,myTemplate)
+      // 3. 사용자가 등록한 이메일로 가입환영 템플릿을 전송하기`
+      sendTemplateToEmail(userMail,myTemplate)
     }
-    res.send("이메일을 전송했습니다.")
+    res.send(userMail, myTemplate)
+    res.send(`${req.body.name}님에게 가입환영 메일을 전송했습니다.`)
   })
 
 
@@ -169,5 +196,8 @@ app.post("/users" ,  (req,res) => {   ///이걸 보내줘~
 mongoose.connect("mongodb://my-database:27017/mini_project")
 
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`########################################`)
+    console.log(`### ${port}번 포트로 연결합니다. ###`)
+    console.log(`########################################`)
+ 
   })

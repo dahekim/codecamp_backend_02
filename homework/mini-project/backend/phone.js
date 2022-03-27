@@ -26,10 +26,10 @@ export function getToken(){
     const result = String(Math.floor(Math.random()*10**myCount)).padStart(myCount,"0")
     return result;
 }
-/*
+
 export async function sendTokenToSMS(phNum,myToken){ 
 
-    const appKey = process.env.SMS_APP_KEY              //.env에 있는 SMS_APP_KEY 가져오기~ 
+    const appKey = process.env.SMS_APP_KEY              
     const XSecretKey = process.env.SMS_X_SECRET_KEY
     const sender =process.env.SMS_SENDER
     
@@ -41,13 +41,11 @@ export async function sendTokenToSMS(phNum,myToken){
         },
         {
             headers:{
-                "Content-Type" : "application/json;charset=UTF-8",       //Content-Type에 '-'가 있어서 문자열 형태로 들어가야함 (" " 쓰기)
+                "Content-Type" : "application/json;charset=UTF-8",
                 "X-Secret-Key" : XSecretKey
             }
         }
     )
 
     console.log("전송 완료!")
-    //console.log(phNum+"으로 인증번호 " +myToken+ "를 전송합니다.")
 }
-*/
