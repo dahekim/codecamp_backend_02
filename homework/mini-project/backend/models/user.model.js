@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
     personal : String,
     prefer : String,
     pwd: String,
-    phone: String
+    phone: String,
+    og: Object
 })
 
 export const Users = mongoose.model("Users", userSchema)

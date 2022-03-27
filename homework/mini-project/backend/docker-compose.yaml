@@ -9,9 +9,11 @@ services:
             - ./index.js:/myfolder/index.js
             - ./email.js:/myfolder/email.js
             - ./phone.js:/myfolder/phone.js
+            - ./resident-registration-number.js:/myfolder/resident-registration-number.js
+            - ./cheerio.scraping.js:/myfolder/cheerio.scraping.js
 
         ports:
-          - 3001:3001
+          - 3005:3005
 
     my-database:
         image: mongo:latest
