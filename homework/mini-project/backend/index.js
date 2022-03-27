@@ -84,12 +84,7 @@ app.post('/user', async (req, res) => {
     // 5. 저장된 데이터를 users에 담고 user 정보를 저장해서 DB로 보냄
     const users = new Users({
       og: openGraph, 
-      name : req.body.name,
-      email : req.body.email,
-      personal : req.body.personal,
-      prefer : req.body.prefer,
-      pwd: req.body.pwd,
-      phone: req.body.phone
+      ...req.body
     })
 
     await users.save()  
