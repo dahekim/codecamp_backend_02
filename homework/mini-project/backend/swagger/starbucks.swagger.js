@@ -19,19 +19,9 @@
  *                                  properties:
  *                                      name:
  *                                          type: string
- *                                          example: 아메리카노
- *                                          img:
+ *                                          example: 아이스 카페 아메리카노
+ *                                      img:
  *                                          type: string
- *                                          example: 250
+ *                                          example: https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937808.jpg
  *                                      
- */
-
-/**
- * @openapi
- * /boards:
- *   post:
- *         summary: 메뉴 등록하기
- *         response:
- *              200:
-  *                 description: 메뉴등록 성공
  */

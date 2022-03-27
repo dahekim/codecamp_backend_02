@@ -3,36 +3,39 @@
 // 주소를 스크래핑해서 가져온 오픈 그래프들을 저장
 
 import axios from "axios"
-import cheerio from "cheerio"
+import Cheerio from "cheerio"
 
 
-export async function getOgAPI(inputUrl){
-    if( inputUrl.includes("http") ){
-        const targetUrl = inputUrl.split(" ").filter( (el) => el.startsWith("http"))[0]
-        return targetUrl
-    }
-    else 
-    {
-        const targetUrl = "https://" + inputUrl
-        return targetUrl
+export async function getOgAPI(inputUrl) {
+    const openGraph = {
+        title: "",
+        description: "",
+        image: "" 
     }
 
+    // 문자열에 http가 들어가있는지 확인
+    if( inputUrl.includes( "http" ) ) {
+        let httpOg=""
+        // 빈칸 기준으로 쪼개고 쪼갠 부분을 돌면서 시작하는 부분이 http인 부분을 httpOg 담음
+        inputUrl.split(" ").forEach( (el) => {
+            if ( el.startsWith( "http" ) ) {
+                httpOg = el 
+            }
+        })
 
-    const preferSite = await axios.get(targetUrl)       
-    const $ = cheerio.load(preferSite.data)
-    let result = {}
-    
-    $("meta").each( ( _, el ) => {
-        if($(el).attr('property')) {       // $ el에서 속성이 property 인거 있으면 { }에 있는 내용 실행 
+        const rawOg = await axios.get(httpOg)
+        const $ = Cheerio.load(rawOg.data)
 
-            const key =  $(el).attr('property').split(":")[1]
-            // ":"를 기준으로 속성이 property인 태그의 거기서 1번째 인덱스를 가져오고 그걸 key로 받음 
+        $( "meta" ).each( ( _, el ) => {
+            // $ el의 속성이 property 인 것이 없다면 종료
+            if ( !$(el).attr( "property" ) ) return
+        
+        // ":"를 기준으로 속성이 property인 태그의 거기서 1번째 인덱스를 가져오고 key로 받음
+        const key = $(el).attr("property").split(":")[1]
+         // 속성이 content인 태그를 받아와서 content에 넣음
+        const content = $(el).attr("content")
+        openGraph[key] = content
 
-            const value =  $(el).attr('content') 
-            // =>속성이 content인 태그를 받아와서 그걸 value에 넣을거야
-            result[key] = value
-        }
-    })
-    console.log( '결과 : ', result )
-    return result
+        return openGraph }) 
+    }
 }

@@ -2,7 +2,7 @@
  * @openapi
  * /users:
  *   get:
- *         summary: 회원목록조회
+ *         summary: 회원 목록조회
  *         tags: [User]
  *         parameters:
  *          -in: query
@@ -22,7 +22,7 @@
  *                                          example: aaa@aaaaa.com
  *                                      name:
  *                                          type: string
- *                                          example: 철수
+ *                                          example: 박에이
  *                                      phone:
  *                                          type: string
  *                                          example: "01012345678"
@@ -32,11 +32,27 @@
  *                                      prefer:
  *                                          type: string
  *                                          example: https://netflix.com
+ *                                      pwd:
+ *                                          type: string
+ *                                          example: qwer1234"
+ *                                      og:
+ *                                          type: object
+ *                                          properties:
+ *                                              title:
+ *                                                  type: string
+ *                                                  example: 네이버
+ *                                              description:
+ *                                                  type: string
+ *                                                  example: 네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요
+ *                                              image:
+ *                                                  type: string
+ *                                                  example: "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png
+ *                                              
  */
 
 /**
  * @openapi
- * /boards:
+ * /user:
  *   post:
  *         summary: 회원 등록하기
  *         response:

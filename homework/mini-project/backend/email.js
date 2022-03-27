@@ -14,7 +14,7 @@ export function checkValidationEmail(email){
 
 }
 
-export function getWelcomeTemplate( { name, phNum, fvSite } ){
+export function getWelcomeTemplate( name,phNum,fvSite ){
     const createdAt = getToday()
 
     return `<html>

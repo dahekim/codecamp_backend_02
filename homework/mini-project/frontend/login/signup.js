@@ -16,7 +16,7 @@ const submitSignup = async () => {
   const name = document.getElementById("SignupName").value
   const email = document.getElementById("SignupEmail").value
   const personal= document.getElementById("SignupPersonal").value
-  const prefer = document.getElementById("SignupPrefer").value
+  const fvSite = document.getElementById("SignupPrefer").value
   const pw = document.getElementById("SignupPwd").value  
   const phNum = document.getElementById("PhoneNumber01").value + document.getElementById("PhoneNumber02").value + document.getElementById("PhoneNumber03").value
  
@@ -24,9 +24,7 @@ const submitSignup = async () => {
   console.log('회원 가입 이메일 전송')
   await axios.post("http://localhost:3005/user",{
     user: {                                         
-      name,phNum,email,fvSite}
-  })
-  console.log('메일 전송 성공')
-  
+      name, phNum, email, fvSite }
+  })  
 } 
 

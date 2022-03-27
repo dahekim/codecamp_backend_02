@@ -41,16 +41,15 @@ app.post('/user', async (req, res) => {
   const phNumInToken = await Tokens.findOne( { phone : req.body.phone } )
   const phNumInUsers = await Users.findOne( { phone : req.body.phone } )
 
-
+  // 0. 인증을 진행하지 않았을 때 
   if(phNumInToken === null){
     res.send("먼저 인증을 진행해주세요.") 
     return
   }
 
-  // 1. 이미 인증이 됐거나, 핸드폰번호가 Users에 있다면
+  // 1. 이미 인증이 됐거나, 핸드폰번호가 Users DB에 있는 경우
   // 이미 가입한 회원이라는 메시지 반환  
-  else if(phNumInToken.isAuth === true && phNumInToken.phone === req.body.phone
-    && phNumInUsers === req.body.phone){
+  else if(phNumInToken.isAuth === true && phNumInUsers === req.body.phone){
     res.send("이미 가입한 회원입니다.")
     return
   }
@@ -67,50 +66,55 @@ app.post('/user', async (req, res) => {
   // 데이터를 등록하는 로직 수행 => DB에 접속해서 데이터 저장하기
   else
   { 
-    // 4. 주민등록번호 검증 및 마스킹
-    const regiNum = req.body.personal 
-    
-    const isValid_1 = withHypen(regiNum)
+    // 4. 주민등록번호 검증 및 마스킹    
+    const isValid_1 = withHypen( req.body.personal )
     if (isValid_1){
-      const isValid_2 = validNumCount(regiNum)
+      const isValid_2 = validNumCount( req.body.personal )
       if (isValid_2){
-        createMasking(regiNum)
+        createMasking( req.body.personal) 
         }
       }
-    const maskingRegiNum = createMasking(regiNum)  
-    await Users.updateOne( { phone : req.body.phone } ,  { personal: maskingRegiNum } )
+    const maskingRegiNum = createMasking( req.body.personal )
 
-    // 5. 내가 좋아하는 사이트로 입력받은 사이트를 스크래핑, DB에 og 정보 업데이트
-    const fvSite= req.body.prefer
-    const perferOgs = getOgAPI(fvSite)
-    
-    await Users.updateOne( { phone : req.body.phone } , { og : perferOgs }  )
-    // . 임시 저장된 데이터를 users에 담기
+    // 5. 내가 좋아하는 사이트로 입력받은 사이트의 og 스크래핑
+    const openGraph = await getOgAPI( req.body.prefer )
+
+    // 5. 저장된 데이터를 users에 담고 user 정보를 저장해서 DB로 보냄
     const users = new Users({
       ...req.body 
     })
+    await users.save()   
 
-    // . user 정보를 저장
-    await users.save()
+    
+    // 6. 이메일 인증
+    const userMail  = req.body.email
+    const myUser = req.body.user
 
-    // . 이메일 인증
-    const userMail = req.body.email
     // 1- 이메일 주소가 정상인지 확인 (1-이메일 존재 여부ㅡ 2-"@" 포함여부)
-    const isValid = checkValidationEmail( userMail )
+    const isValid_3 = checkValidationEmail( userMail )
   
-    if (isValid){
+    if (isValid_3){
       // 2- 가입환영 템플릿을 만들기
-      const myTemplate = getWelcomeTemplate( users.name, users.phNum, users.prefer )
+      const userName = req.body.name
+      const userPhNum = req.body.phone
+      const userRegiNum =req.body.prefer
+      const myTemplate = getWelcomeTemplate(  userName, userPhNum, userRegiNum )
   
       // 3- 사용자가 등록한 이메일로 가입환영 템플릿을 전송
-      sendTemplateToEmail(userMail,myTemplate)
+      sendTemplateToEmail( userMail , myTemplate )
     }
+    
+    
+   
 
+    // 8. 주민등록번호마스킹, 빈 객체값이었던 og에 값 넣어줌
+    await Users.updateOne( { personal : req.body.personal } ,  { personal: maskingRegiNum } )
+    await Users.updateOne( { phone : req.body.phone } , { og : openGraph }  )
 
 
     res.send("회원가입이 완료되었습니다.")
     // . DB에 등록된 '_id'값을 불러오고 응답란에 _id 띄우기
-    //res.send(gg)    
+    // res.send(오브젝트아이디 str값 보여주기)    
   }
 })
 

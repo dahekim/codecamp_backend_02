@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
+    og: {
+        title: String,
+        description: String,
+        image: String
+    },
     name : String,
     email : String,
     personal : String,
     prefer : String,
     pwd: String,
     phone: String,
-    og: {
-        title: String,
-        description: String,
-        image: String
-    }
 })
 
 export const Users = mongoose.model("Users", userSchema)
