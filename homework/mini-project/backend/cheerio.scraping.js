@@ -10,7 +10,7 @@ export async function getOgAPI(inputUrl) {
     const openGraph = {
         title: "",
         description: "",
-        image: "" 
+        image: ""
     }
 
     // 문자열에 http가 들어가있는지 확인
@@ -31,11 +31,12 @@ export async function getOgAPI(inputUrl) {
             if ( !$(el).attr( "property" ) ) return
         
         // ":"를 기준으로 속성이 property인 태그의 거기서 1번째 인덱스를 가져오고 key로 받음
-        const key = $(el).attr("property").split(":")[1]
+        const key = $(el).attr( "property" ).split(":")[1]
          // 속성이 content인 태그를 받아와서 content에 넣음
-        const content = $(el).attr("content")
+        const content = $(el).attr( "content" )
         openGraph[key] = content
 
-        return openGraph }) 
+        })
+        return openGraph 
     }
 }

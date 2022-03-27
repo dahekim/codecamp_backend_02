@@ -1,9 +1,9 @@
 /**
  * @openapi
- * /tokens/phone:
- *   post:
+ * /users:
+ *   get:
  *         summary: 회원 목록조회
- *         tags: [Token]
+ *         tags: [User]
  *         parameters:
  *          -in: query
  *          name: number
@@ -51,8 +51,8 @@
  */
 /**
  * @openapi
- * /tokens/phone:
- *   patch:
+ * /user:
+ *   post:
  *         summary: 회원 등록하기
  *         response:
  *              200:

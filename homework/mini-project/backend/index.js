@@ -1,5 +1,5 @@
 import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
-// import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
+//import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
 import { withHypen, validNumCount, createMasking } from "./resident-registration-number.js"
 import { getOgAPI } from "./cheerio.scraping.js"
 
@@ -49,7 +49,8 @@ app.post('/user', async (req, res) => {
 
   // 1. 이미 인증이 됐거나, 핸드폰번호가 Users DB에 있는 경우
   // 이미 가입한 회원이라는 메시지 반환  
-  else if(phNumInToken.isAuth === true && phNumInUsers === req.body.phone){
+  else if(phNumInToken.isAuth === true && phNumInToken.phone === req.body.phone
+    && phNumInUsers === req.body.phone){
     res.send("이미 가입한 회원입니다.")
     return
   }
@@ -79,13 +80,22 @@ app.post('/user', async (req, res) => {
     // 5. 내가 좋아하는 사이트로 입력받은 사이트의 og 스크래핑
     const openGraph = await getOgAPI( req.body.prefer )
 
+
     // 5. 저장된 데이터를 users에 담고 user 정보를 저장해서 DB로 보냄
     const users = new Users({
-      ...req.body 
+      og: openGraph, 
+      name : req.body.name,
+      email : req.body.email,
+      personal : req.body.personal,
+      prefer : req.body.prefer,
+      pwd: req.body.pwd,
+      phone: req.body.phone
     })
-    await users.save()   
 
-    /*
+    await users.save()  
+ 
+/*
+    
     // 6. 이메일 인증
     const userMail  = req.body.email
     const myUser = req.body.user
@@ -107,13 +117,13 @@ app.post('/user', async (req, res) => {
 */
     // 8. 주민등록번호마스킹, 빈 객체값이었던 og에 값 넣어줌
     await Users.updateOne( { personal : req.body.personal } ,  { personal: maskingRegiNum } )
-    await Users.updateOne( { phone : req.body.phone } , { og : openGraph }  )
+//    await Users.updateOne( { phone : req.body.phone } , { og : openGraph }  )
 
 
     
     // . DB에 등록된 '_id'값을 불러오고 응답란에 _id 띄우기
     let userObId = await Users.findOne( { phone : req.body.phone } ) // Users.findOne({ phone: '01043438846' })
-    res.send(`${userObId._id}`)    
+    res.send(`${userObId._id.toString()}`)    
   }
 })
 
@@ -166,11 +176,13 @@ app.patch("/tokens/phone",async (req,res) => {
   const myPhNum = await Tokens.findOne( {phone : req.body.phone} )
 
   if(req.body.phone !== myPhNum.phone ||  req.body.token !== myPhNum.token){
-    res.send("false")
+    res.send("인증번호를 확인해주세요.")
+    console.log("인증에 실패하였습니다. 인증번호를 다시 한번 확인해주세요. ")
   }
   else{
     await Tokens.updateOne( { phone : req.body.phone } ,  { isAuth: true }  )
-    res.send("true")
+    res.send("휴대폰 인증이 완료되었습니다.")
+    console.log("휴대폰 인증이 완료되었습니다.")
   }
 })
 
