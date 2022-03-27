@@ -10,6 +10,15 @@ const getValidationNumber = async () => {
   })
 }
 
+// 핸드폰 인증번호 완료
+const submitToken = async() => {
+  const inToken= document.getElementById("TokenInput").value
+  await axios.patch("http://localhost:3005/tokens/phone", { 
+    undefinedToken: inToken})
+    .then( ( res ) =>{
+      console.log(res)
+    })
+  }
 
 // 회원 가입 API 요청
 const submitSignup = async () => {
@@ -19,7 +28,7 @@ const submitSignup = async () => {
   const fvSite = document.getElementById("SignupPrefer").value
   const pw = document.getElementById("SignupPwd").value  
   const phNum = document.getElementById("PhoneNumber01").value + document.getElementById("PhoneNumber02").value + document.getElementById("PhoneNumber03").value
- 
+  
   
   console.log('회원 가입 이메일 전송')
   await axios.post("http://localhost:3005/user",{
@@ -27,4 +36,5 @@ const submitSignup = async () => {
       name, phNum, email, fvSite }
   })  
 } 
+
 
