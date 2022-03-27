@@ -1,5 +1,5 @@
 import { checkValidationPh, getToken, sendTokenToSMS } from "./phone.js";
-//import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
+import { checkValidationEmail, getWelcomeTemplate, sendTemplateToEmail } from "./email.js"
 import { withHypen, validNumCount, createMasking } from "./resident-registration-number.js"
 import { getOgAPI } from "./cheerio.scraping.js"
 
@@ -89,7 +89,7 @@ app.post('/user', async (req, res) => {
 
     await users.save()  
  
-/*
+
     
     // 6. 이메일 인증
     const userMail  = req.body.email
@@ -109,7 +109,7 @@ app.post('/user', async (req, res) => {
       // 3- 사용자가 등록한 이메일로 가입환영 템플릿을 전송
       sendTemplateToEmail( userMail , myTemplate )
     }
-*/
+
     // 8. 주민등록번호마스킹, 빈 객체값이었던 og에 값 넣어줌
     await Users.updateOne( { personal : req.body.personal } ,  { personal: maskingRegiNum } )
 //    await Users.updateOne( { phone : req.body.phone } , { og : openGraph }  )
@@ -125,7 +125,7 @@ app.post('/user', async (req, res) => {
 
 // 커피목록 조회 API
 app.get('/starbucks', async (req, res) => {
-    const coffeeList = await Starbucks.find({})
+    const coffeeList = await Starbucks.find( {} )
     res.send(coffeeList)  
   })
 
