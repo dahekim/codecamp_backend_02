@@ -1,13 +1,13 @@
 /**
  * @openapi
- * /tokens/phone:
- *   post:
- *         summary: 회원 목록조회
- *         tags: [Token]
+ * /users
+ *   get:
+ *         summary: 회원 목록조회, _id와 이름, 이메일, 핸드폰번호, 주민등록번호, 비밀번호, 좋아하는 사이트(og 정보 포함)가 반환됩니다.
+ *         tags: [Users]
  *         parameters:
- *          -in: query
- *          name: number
- *          type: int
+ *          -in: body
+ *          name: users
+ *          type: object
  *         responses:
  *              200:
  *                  description: 회원목록조회 성공
@@ -17,12 +17,15 @@
  *                              type: array     
  *                              items: 
  *                                  properties:
+ *                                      _id:
+ *                                          type: string
+ *                                          example: "507f191e810c19729de860ea"
  *                                      email:
  *                                          type: string
  *                                          example: aaa@aaaaa.com
  *                                      name:
  *                                          type: string
- *                                          example: 박에이
+ *                                          example: "박에이"
  *                                      phone:
  *                                          type: string
  *                                          example: "01012345678"
@@ -51,10 +54,47 @@
  */
 /**
  * @openapi
- * /tokens/phone:
- *   patch:
- *         summary: 회원 등록하기
+ * /users
+ *   post:
+ *         summary: json방식으로 신규 회원을 등록합니다. 이름과 이메일, 주민등록번호, 좋아하는 사이트, 핸드폰번호, 비밀번호를 기재하여 보내면 _id가 반환됩니다.
+ *         tags: [Users]
+ *         requestBody:
+ *                  required: true
+ *                  content:
+ *                     application/json:
+ *                         schema:
+ *                             type: object
+ *                             properties:
+ *                                 name:
+ *                                     type: string
+ *                                     required: true
+ *                                     example: 김다혜
+ *                                 email:
+ *                                     type: string
+ *                                     required: true
+ *                                     example: aaa@gmail.com
+ *                                 personal:
+ *                                     type: string
+ *                                     required: true
+ *                                     example: 900408-1111111
+ *                                 prefer:
+ *                                     type: string
+ *                                     required: true
+ *                                     example: "http://netfilx.com"
+ *                                 pwd:
+ *                                     type: string
+ *                                     required: true
+ *                                     example: "qwer1234"
+ *                                 phone: 
+ *                                     type: string
+ *                                     required: true
+ *                                     example: "01012340093"
  *         response:
- *              200:
-  *                 description: 회원등록 성공
+ *              '200':
+ *                      description: user의 _id 리턴
+ *                      content:
+ *                          application/json:
+ *                             schema:
+ *                               type: string
+ *                               example: "507f191e810c19729de860ea"
  */

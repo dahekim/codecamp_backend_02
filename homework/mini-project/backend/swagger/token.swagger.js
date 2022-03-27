@@ -1,60 +1,35 @@
 /**
  * @openapi
- * /users:
- *   get:
- *         summary: 회원 목록조회
- *         tags: [User]
+ * /tokens/phone:
+ *   post:
+ *         summary: 토큰 인증 요청 API / 핸드폰 토큰 전송, 핸드폰 번호와 인증번호, 인증번호 일치 여부 확인
+ *         tags: [Tokens]
  *         parameters:
- *          -in: query
- *          name: number
- *          type: int
- *         responses:
- *              200:
- *                  description: 회원목록조회 성공
- *                  content:
- *                       application/json:
- *                          schema:
- *                              type: array     
- *                              items: 
- *                                  properties:
- *                                      email:
- *                                          type: string
- *                                          example: aaa@aaaaa.com
- *                                      name:
- *                                          type: string
- *                                          example: 박에이
- *                                      phone:
- *                                          type: string
- *                                          example: "01012345678"
- *                                      personal:
- *                                          type: string
- *                                          example: "980223-2158963"
- *                                      prefer:
- *                                          type: string
- *                                          example: https://netflix.com
- *                                      pwd:
- *                                          type: string
- *                                          example: "qwer1234"
- *                                      og:
- *                                          type: Object
- *                                          properties:
- *                                              title:
- *                                                  type: string
- *                                                  example: "네이버"
- *                                              description:
- *                                                  type: string
- *                                                  example: "네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요"
- *                                              image:
- *                                                  type: string
- *                                                  example: "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png
+ *          -in: body
+ *            name: tokens
+ *            description: 토큰
+ *            schema:
+ *              type: object
+ *              required
+ *                  -phone
+ *              properties:
+ *                  phone:
+ *                      type: string
+ *         response:
+ *           200: 
+ *              description: "인증번호가 전송되었습니다."
+ *          
  *                                              
  */
 /**
  * @openapi
- * /user:
- *   post:
- *         summary: 회원 등록하기
+ * /tokens/phone:
+ *   patch:
+ *         summary: 인증번호가 일치하면 DB의 isAuth를 true로 수정합니다.
+ *         tags: [Tokens]
  *         response:
  *              200:
-  *                 description: 회원등록 성공
+ *                 description: "인증번호를 확인해주세요."
+ *              422:
+ *                 description: "휴대폰 인증이 완료되었습니다."
  */

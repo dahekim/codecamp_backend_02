@@ -172,12 +172,10 @@ app.patch("/tokens/phone",async (req,res) => {
 
   if(req.body.phone !== myPhNum.phone ||  req.body.token !== myPhNum.token){
     res.send("인증번호를 확인해주세요.")
-    console.log("인증에 실패하였습니다. 인증번호를 다시 한번 확인해주세요. ")
   }
   else{
     await Tokens.updateOne( { phone : req.body.phone } ,  { isAuth: true }  )
     res.send("휴대폰 인증이 완료되었습니다.")
-    console.log("휴대폰 인증이 완료되었습니다.")
   }
 })
 

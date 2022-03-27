@@ -9,6 +9,9 @@ services:
             - ./index.js:/myfolder/index.js
             - ./email.js:/myfolder/email.js
             - ./phone.js:/myfolder/phone.js
+            - ./swagger/starbucks.swagger.js:/myfolder/swagger/starbucks.swagger.js
+            - ./swagger/token.swagger.js:/myfolder/swagger/token.swagger.js
+            - ./swagger/user.swagger.js:/myfolder/swagger/user.swagger.js
         ports:
           - 3005:3005
 
