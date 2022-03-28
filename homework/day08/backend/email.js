@@ -56,6 +56,5 @@ export async function sendTemplateToEmail(email,myTemplate){
         }
     )
 
-    console.log("가입 완료!")
-    // console.log(`${email}로 ${mytemplate}을 전송합니다.`)
+    console.log("가입 완료 이메일을 전송했습니다!")
 }
