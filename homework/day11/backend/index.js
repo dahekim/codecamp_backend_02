@@ -170,11 +170,11 @@ app.patch("/tokens/phone",async (req,res) => {
   const myPhNum = await Tokens.findOne( {phone : req.body.phone} )
 
   if(req.body.phone !== myPhNum.phone ||  req.body.token !== myPhNum.token){
-    res.send("인증번호를 확인해주세요.")
+    res.send(false)
   }
   else{
     await Tokens.updateOne( { phone : req.body.phone } ,  { isAuth: true }  )
-    res.send("휴대폰 인증이 완료되었습니다.")
+    res.send(true)
   }
 })
 
