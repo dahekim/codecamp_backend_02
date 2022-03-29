@@ -15,6 +15,7 @@ const createMenuCard = (data) => {
 
   const menuCardImgBox = document.createElement('div')
   menuCardImgBox.className = 'Menu_Card_ImgBox'
+  menuCardImgBox.src= data?.image || '~'
 
   const menuCardName = document.createElement('div')
   menuCardName.className = 'Menu_Card_Name'
