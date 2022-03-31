@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { MenuResolver } from './menus.resolver';
-import { MenuService } from './menus.service';
+import { StarbucksResolver } from './menus.resolver';
+import { StarbucksService } from './menus.service';
 
 @Module({
-    providers: [MenuService, MenuResolver],
+    providers: [StarbucksService, StarbucksResolver],
 })
-export class MenuModule {}
+export class StarbucksModule {}

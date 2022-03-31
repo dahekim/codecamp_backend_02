@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateMenuInput {
+export class CreateStarbucksInput {
     @Field(() => String)
     name: string;
 
@@ -12,7 +12,7 @@ export class CreateMenuInput {
     kcal: number;
 
     @Field(() => Number)
-    fat: number;
+    fats: number;
 
     @Field(() => Number)
     protein: number;
@@ -24,5 +24,5 @@ export class CreateMenuInput {
     sugars: number;
 
     @Field(() => Number)
-    caffein: number;
+    caffeine: number;
 }

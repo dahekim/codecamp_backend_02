@@ -426,11 +426,11 @@
     tslib "~2.3.0"
 
 "@graphql-tools/mock@^8.1.2":
-  version "8.6.3"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/mock/-/mock-8.6.3.tgz#f15849184adf0fec7d5a402950f96d1d392e97be"
-  integrity sha512-Nv095DXWz5Xt6U3SHhkIVtfuWyBNW1yiQk1o+DgM8/4Vj+v6zic1/y3eUpmoiy/qKu3qgagA6mxI8ZU/W6VS8w==
+  version "8.6.4"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/mock/-/mock-8.6.4.tgz#8e50cc94793516b6f9570f473ee6cc8452726fc5"
+  integrity sha512-KhK8xrNb2knDjoWYz0hgCtmmoZ874pKcb1bTdyJ5sD8tBGtii05OdLUaueBKuvtX2lKZNcMSbloneQY6j8EbGA==
   dependencies:
-    "@graphql-tools/schema" "8.3.5"
+    "@graphql-tools/schema" "8.3.6"
     "@graphql-tools/utils" "8.6.5"
     fast-json-stable-stringify "^2.1.0"
     tslib "~2.3.0"
@@ -445,10 +445,10 @@
     tslib "~2.3.0"
     value-or-promise "1.0.11"
 
-"@graphql-tools/schema@8.3.5", "@graphql-tools/schema@^8.0.0":
-  version "8.3.5"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-8.3.5.tgz#ebec0c0c7f53e591d34375d6f81d0660852fcaca"
-  integrity sha512-3mJ/K7TdL+fnEUtCUqF4qkh1fcNMzaxgwKgO9fSYSTS7zyT16hbi5XSulSTshygHgaD2u+MO588iR4ZJcbZcIg==
+"@graphql-tools/schema@8.3.6", "@graphql-tools/schema@^8.0.0":
+  version "8.3.6"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-8.3.6.tgz#80cfe3eba53eb6390a60a30078d7efbdaa5cc0b7"
+  integrity sha512-7tWYRQ8hB/rv2zAtv2LtnQl4UybyJPtRz/VLKRmgi7+F5t8iYBahmmsxMDAYMWMmWMqEDiKk54TvAes+J069rQ==
   dependencies:
     "@graphql-tools/merge" "8.2.6"
     "@graphql-tools/utils" "8.6.5"
@@ -1606,7 +1606,7 @@ apollo-server-errors@^3.3.1:
   resolved "https://registry.yarnpkg.com/apollo-server-errors/-/apollo-server-errors-3.3.1.tgz#ba5c00cdaa33d4cbd09779f8cb6f47475d1cd655"
   integrity sha512-xnZJ5QWs6FixHICXHxUfm+ZWqqxrNuPlQ+kj5m6RtEgIpekOPssH/SD9gf2B4HuWV0QozorrygwZnux8POvyPA==
 
-apollo-server-express@^3.6.7:
+apollo-server-express@3.x.x:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/apollo-server-express/-/apollo-server-express-3.6.7.tgz#9b83ba088cc40ea98bc0f903f9bfed41ea98fdf8"
   integrity sha512-B4gH5j8t3XxTCIa9bl7Iq/F3YFzMxX/LV4Sc+L/3xkHm648u576G5Lkskl8HsoTGSzzyeVcVsPDoYHiBjCAN0Q==
@@ -4126,6 +4126,11 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+nestjs@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/nestjs/-/nestjs-0.0.1.tgz#e4b3b82fbbd0bbf993a7c7a137b3ad59ccecf6b6"
+  integrity sha1-5LO4L7vQu/mTp8ehN7OtWczs9rY=
 
 node-emoji@1.11.0:
   version "1.11.0"
