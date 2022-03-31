@@ -24,7 +24,7 @@ export class BoardResolver {
         @Args('writer') writer: string,
         @Args('contents') contents: string,
 
-        @Args('createBoardInput') createBoard: CreateBoardInput,
+        @Args('createBoardInput') CreateBoardInput: CreateBoardInput,
     ) {
         console.log(title);
         console.log(writer);
