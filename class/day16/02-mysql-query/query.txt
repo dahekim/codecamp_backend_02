@@ -1,0 +1,48 @@
+전체 데이터베이스 조회
+show databases;
+
+특정 database로 들어가기
+use [db_name]
+
+테이블 조회
+SELECT  * from product;
+SELECT * from product_saleslocation;
+
+테이블에 데이터 삽입
+INSERT into product (id, name, description, price, isSoldout)
+		values(uuid(), '마우스','정말 좋은 마우스예여',15000,false );
+		
+insert into product_saleslocation (id, address, addressDetail, lat, lng, meetingTime)
+		values(uuid(), '구로구','구로디지털단지역', 0.0, 0.1, '2022-12-31');
+
+INSERT into product (id, name, description, price, isSoldout)
+		values(uuid(), '노트북','최신이에요',300000,false );
+
+테이블 수정
+UPDATE product 
+	set name = '키보드'
+	WHERE price = 15000;
+	
+UPDATE product 
+	set productSaleslocationID ='680f9d10-b3ed-11ec-9b16-ea21e61fe624'
+	WHERE name = '키보드';
+	
+
+JOIN 조회
+SELECT p.id, name, price, address, addressDetail
+	FROM product p, product_saleslocation ps
+WHERE p.productSaleslocationId  = ps.id; 
+
+
+
+
+INSERT into product_category (id, name)
+	values(uuid(), '전자제품');
+
+SELECT p.id, p.name as '상품명', price, pc.name as '카테고리', pc.id 
+	FROM product p, product_category pc  
+WHERE p.productCategoryId = pc.id;
+
+update product 
+set productCategoryId = 'dc869858-b3f0-11ec-9b16-ea21e61fe624' 
+	WHERE name ='노트북';
