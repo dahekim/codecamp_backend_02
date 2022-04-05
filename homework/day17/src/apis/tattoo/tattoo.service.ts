@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Tattoo } from "./entities/tattoo.entity";
@@ -27,5 +27,26 @@ export class TattooService{
         console.log(result)
         return result
     }
+    
+    async update({tattooId, updateTattooInput}){
+        const tattoo = await this.tattooRepository.findOne({
+            where: { id_tattoo : tattooId }
+        })
 
+        const updateTattoo = {
+            ...tattoo,
+            ...updateTattooInput,
+        }
+        return await this.tattooRepository.save(updateTattoo)
+    }
+
+    // 작업 착수 여부 체크 함수
+    async checkStart( {tattooId} ){
+        const tattoo = await this.tattooRepository.findOne({
+            where: { id: tattooId },
+        })
+
+        if (tattoo.isStart)
+        throw new UnprocessableEntityException("타투 작업이 착수되어 수정이 불가능합니다!")
+    }
 }

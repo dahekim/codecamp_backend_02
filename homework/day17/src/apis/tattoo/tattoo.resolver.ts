@@ -1,5 +1,8 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+
 import { CreateTattooInput } from "./dto/createTattoo.input";
+import { UpdateTattooInput } from "./dto/updateTattoo.input";
+
 import { Tattoo } from "./entities/tattoo.entity";
 import { TattooService } from "./tattoo.service";
 
@@ -26,6 +29,18 @@ export class TattooResolver{
         @Args('createTattooInput') createTattooInput: CreateTattooInput,
     ) {  
         return this.tattooService.create( {createTattooInput} )
+    }
+
+    // 타투 데이터 수정
+    @Mutation(()=> Tattoo)
+    async updateTattoo(
+        @Args("tattooId") tattooId: string,
+        @Args("updateTattooInput") updateTattooInput: UpdateTattooInput,
+    )
+    {
+        await this.tattooService.checkStart ({tattooId})
+
+        return await this.tattooService.update( { tattooId, updateTattooInput } )
     }
 
 }

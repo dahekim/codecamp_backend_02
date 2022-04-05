@@ -41,6 +41,11 @@ export class Tattoo {
     @Field(() => String)
     payment: string
     
+    // 타투 작업 착수 여부
+    @Column({default:false})
+    @Field(()=> Boolean)
+    isStart: boolean
+
     // 1:1
     // 1. 타투 도안 테이블
     @OneToOne(() => Design )

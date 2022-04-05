@@ -35,7 +35,7 @@ import { Method } from './method/entities/method.entity';
             username: 'root',
             password: 'root',
             database: 'mydocker02',
-            entities: [Bodypart, Design, TattooLocation, Review, Tattoo, TattooType, Users, Method, TattooGenre],
+            entities: [Bodypart, Design, TattooLocation, Review, Tattoo, TattooType, Users, Method, TattooGenre, Review],
             synchronize: true,
             logging: true,
         }),
