@@ -43,7 +43,7 @@ export class TattooService{
     // 작업 착수 여부 체크 함수
     async checkStart( {tattooId} ){
         const tattoo = await this.tattooRepository.findOne({
-            where: { id: tattooId },
+            where: { id_tattoo: tattooId },
         })
 
         if (tattoo.isStart)

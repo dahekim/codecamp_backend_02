@@ -18,6 +18,7 @@ export class Tattoo {
     @Field(() => String)
     id_tattoo: string
 
+    @Column()
     @Field(() => String)
     name_tattoo: string
 
