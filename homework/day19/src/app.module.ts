@@ -12,6 +12,7 @@ import { TattooGenre } from './apis/tattoo_genre/entities/tattooGenre.entity';
 import { TattooType } from './apis/tattoo_type/entities/tattooType.entity';
 import { Users } from './apis/users/entities/users.entity';
 import { Method } from './apis/method/entities/method.entity';
+import { DesignModule } from './apis/design/design.module';
 
 
 // import { AppController } from './app.controller';
@@ -22,6 +23,8 @@ import { Method } from './apis/method/entities/method.entity';
 @Module({
     imports: [
         TattooModule,
+        DesignModule,
+        Method,
 
        
         GraphQLModule.forRoot<ApolloDriverConfig>({

@@ -23,21 +23,27 @@ export class TattooService{
 
     async findAll(){
         return await this.tattooRepository.find({
-            relations: ['method', 'design', 'location']
+            relations: ['method', 'design', 'location', 
+        'part', 'user', 'genre', 'type']
         })
     }
     async findOne({tattooId}){
         return await this.tattooRepository.findOne({
             where: {id_tattoo : tattooId},
-            relations: ['method', 'design', 'location'] })
+            relations: ['method', 'design', 'location',
+            'part', 'user', 'genre', 'type'] })
     }
+    // 삭제한 데이터 포함 모든 데이터 조회
     async withDelete(){
-        //return await this.tattooRepository.withDeleted().find()
+        return await this.tattooRepository.find({
+            withDeleted: true
+        })
     }
 
 
     async create({ createTattooInput }){
-        const {design, method, location, ...tattoo } = createTattooInput
+        const {design, method, location,
+            part, genre, type, user, ...tattoo } = createTattooInput
         const designResult = await this.designRepository.save({
             ...design
         })
@@ -49,7 +55,12 @@ export class TattooService{
             ...tattoo,
             design: designResult,
             method: methodResult,
-            location: { name_location: location },
+            location: { name_location : location },
+            part: { id_part : part },
+            genre: { id_genre : genre },
+            type: { id_type : type },
+            user: { id_user : user},
+
         })
         console.log(result)
         return result
