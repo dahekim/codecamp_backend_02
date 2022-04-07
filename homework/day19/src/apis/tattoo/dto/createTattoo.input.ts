@@ -1,7 +1,6 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
-import { Design } from "src/apis/design/entities/design.entity";
-import { Method } from "src/apis/method/entities/method.entity";
-
+import { DesignInput } from "src/apis/design/dto/design.input";
+import { MethodInput } from "src/apis/method/dto/method.input";
 @InputType()
 export class CreateTattooInput{
     @Field(() => String)
@@ -23,12 +22,12 @@ export class CreateTattooInput{
     payment : string
 
     // 1:1 - 작업방식
-    @Field(() => Method)
-    method: Method
+    @Field(() => MethodInput)
+    method: MethodInput
 
     // 1:1 - 도안
-    @Field(() => Design)
-    design: Design
+    @Field(() => DesignInput)
+    design: DesignInput
 
     // 1:N - 지역
     @Field(() =>String)

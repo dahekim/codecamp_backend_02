@@ -8,6 +8,11 @@ type Bodypart {
   size: String!
 }
 
+type TattooLocation {
+  id_location: Int!
+  name_location: String!
+}
+
 type Design {
   id_design: String!
   name_design: String!
@@ -15,9 +20,17 @@ type Design {
   like: Int!
 }
 
-type TattooLocation {
-  id_location: Int!
-  name_location: String!
+type Method {
+  id_method: Int!
+  name_method: String!
+}
+
+type Review {
+  id_review: String!
+  desc_review: String!
+  url_review: String!
+  star: Int!
+  users: [Users!]!
 }
 
 type Users {
@@ -35,19 +48,6 @@ type Users {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-type Review {
-  id_review: String!
-  desc_review: String!
-  url_review: String!
-  star: Int!
-  users: [Users!]!
-}
-
-type Method {
-  id_method: Int!
-  name_method: String!
-}
 
 type TattooType {
   id_type: Int!
@@ -79,12 +79,15 @@ type Tattoo {
 
 type Query {
   fetchTattoos: [Tattoo!]!
+  fetchTattoosWithDel(tattooId: String!): [Tattoo!]!
   fetchTattoo(tattooId: String!): Tattoo!
 }
 
 type Mutation {
   createTattoo(createTattooInput: CreateTattooInput!): Tattoo!
   updateTattoo(tattooId: String!, updateTattooInput: UpdateTattooInput!): Tattoo!
+  deleteTattoo(tattooId: String!): Boolean!
+  restoreTattoo(tattooId: String!): Boolean!
 }
 
 input CreateTattooInput {
@@ -94,6 +97,23 @@ input CreateTattooInput {
   count_tattoo: Int!
   price: Int!
   payment: String!
+  method: MethodInput!
+  design: DesignInput!
+  id_location: String!
+  id_part: String!
+  id_user: String!
+  id_genre: String!
+  id_type: String!
+}
+
+input MethodInput {
+  name_method: String!
+}
+
+input DesignInput {
+  name_design: String!
+  isSoldout: Boolean!
+  like: Int!
 }
 
 input UpdateTattooInput {
@@ -103,4 +123,11 @@ input UpdateTattooInput {
   count_tattoo: Int
   price: Int
   payment: String
+  method: MethodInput
+  design: DesignInput
+  id_location: String
+  id_part: String
+  id_user: String
+  id_genre: String
+  id_type: String
 }
