@@ -12,11 +12,11 @@ export class Design {
     @Field(() => String)
     name_design: string
 
-    @Column()
+    @Column({default: false})
     @Field(()=> Boolean)
     isSoldout: boolean
 
-    @Column()
+    @Column({default:0})
     @Field(()=> Int)
     like: number
 

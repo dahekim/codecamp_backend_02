@@ -10,6 +10,10 @@ export class Users {
     @Field(()=> String)
     id_user: string
 
+    @Column({ unique:true, nullable: false })
+    @Field(()=> String)
+    nickname_user: string
+
     @Column()
     @Field(()=> Date)
     birth_user: Date
