@@ -10,7 +10,7 @@ export class LocationResolver{
     }
     @Mutation(()=> TattooLocation ) 
     createLocation( 
-        @Args("name_location") name_location: string,
+        @Args("name") name_location: string,
         ){
 
         return this.locationService.create( { name_location } )

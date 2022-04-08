@@ -35,6 +35,7 @@ type Review {
 
 type Users {
   id_user: String!
+  nickname_user: String!
   birth_user: DateTime!
   email_user: String!
   phone_user: String!

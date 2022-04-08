@@ -94,9 +94,8 @@ export class TattooService{
     }
 
     // 삭제 데이터 복구
-    // true => false
     async restore( { tattooId } ){
         const result = await this.tattooRepository.restore( { id_tattoo : tattooId } )
-        return result.affected ? false : true 
+        return result.affected ? true : false 
     }
 }

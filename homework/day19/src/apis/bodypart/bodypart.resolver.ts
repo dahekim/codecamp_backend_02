@@ -4,12 +4,8 @@ import { Bodypart } from "./entities/bodypart.entity";
 
 @Resolver()
 export class BodypartResolver{
-    // 서비스를 주입받는다!
     constructor(private readonly bodypartService: BodypartService,){
-
     }
-
-
 
     @Mutation(()=> Bodypart)
     createBodypart( 
