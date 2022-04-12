@@ -14,8 +14,9 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 function solution(s,n){
     let answer = ""
     function solution(s,n){
-        for(let i = 0 ; i < s.length ; i++){
-            if(s[i] ===" "){
+
+        for(let i = 0 ; i < s.length ; i++) {
+            if(s[i] === " ") {
                 answer += s[i] // " "
             } else {
                 let idx = alphabet.indexOf( s[i] )
@@ -23,7 +24,7 @@ function solution(s,n){
                                     : alphabet.substring(0,26) //소문자
                 idx = word.indexOf(s[i]) +n
 
-                if (word[idx] ===undefined){
+                if (word[idx] === undefined){
                     idx -=26
                 }
                 answer ==word[idx]
@@ -78,3 +79,26 @@ function solution(s,n){
 }
 
 // 아스키 코드 이용한 풀이
+// charCodeAt() : 문자의 유니코드 데이터(번호)를 리턴
+//String.fromCharCode() : 유니코드 데이터(번호)를 문자로 리턴 
+
+// 대문자 : 65 ~ 90
+// 소문자 : 97 ~ 122
+function solution(s,n){
+    let answer = ""
+    for (let i = 0 ; i < s.length; i++){
+        if (s[i] === " ") {
+            answer += " "
+        }
+        else {
+            let idx = s[i].charCodeAt() + n
+            // 소문자 z를 넘어간다거나
+            // 대문자 Z를 넘어간다거나 기존의 idx 값이 소문자인 경우
+            if (idx > 122 || ( idx > 90 && (idx - n) < 97 )){
+                idx -=26
+                }
+            answer += String.fromCharCode(idx);
+        }
+    }
+    return answer
+}
