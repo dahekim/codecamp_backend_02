@@ -23,8 +23,8 @@ export class TattooResolver {
 
   // 타투 하나 정보 조회
   @Query(() => Tattoo)
-  fetchTattoo(@Args('tattooId') tattooId: string) {
-    return this.tattooService.findOne({ tattooId });
+  async fetchTattoo(@Args('tattooId') tattooId: string) {
+    return await this.tattooService.findOne({ tattooId });
   }
 
   // 타투 데이터 생성
@@ -49,13 +49,13 @@ export class TattooResolver {
   // 타투 데이터 삭제 (소프트 딜리트)
   // 삭제 했으면  true, 아니면 false인 boolean 타입으로 출력
   @Mutation(() => Boolean)
-  deleteTattoo(@Args('tattooId') tattooId: string) {
-    return this.tattooService.delete({ tattooId });
+  async deleteTattoo(@Args('tattooId') tattooId: string) {
+    return await this.tattooService.delete({ tattooId });
   }
 
   // 삭제 데이터 복구
   @Mutation(() => Boolean)
-  restoreTattoo(@Args('tattooId') tattooId: string) {
-    return this.tattooService.restore({ tattooId });
+  async restoreTattoo(@Args('tattooId') tattooId: string) {
+    return await this.tattooService.restore({ tattooId });
   }
 }

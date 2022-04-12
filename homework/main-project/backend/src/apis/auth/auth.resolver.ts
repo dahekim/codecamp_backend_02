@@ -1,8 +1,10 @@
-import { UnprocessableEntityException } from "@nestjs/common";
+import { UnprocessableEntityException, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { UserService } from "../users/users.service"
 import * as bcrypt from "bcrypt"
 import { AuthService } from "./auth.service";
+import { CurrentUser, ICurrentUser } from "src/commons/auth/gql-user.param";
+import { GqlAuthRefreshGuard } from "src/commons/auth/gql-auth.guard";
 
 @Resolver()
 export class AuthResolver {
@@ -31,7 +33,12 @@ export class AuthResolver {
 
         // 2-3. 일치하는 유저가 있다면 그 유저를 위한 Access Token(=JWT) 만들어서 프론트엔드에 전달
         return this.authService.getAccessToken({ user })
-
-
+    }
+    @UseGuards(GqlAuthRefreshGuard)
+    @Mutation(() => String)
+    restoreAccessToken(
+        @CurrentUser() currentUser: ICurrentUser,
+    ){
+        this.authService.getAccessToken( { user:currentUser } )
     }
 }

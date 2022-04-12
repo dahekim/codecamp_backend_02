@@ -5,11 +5,16 @@ import { AuthGuard } from '@nestjs/passport'
 
 export class GqlAuthAccessGuard extends AuthGuard('access'){
     getRequest(context: ExecutionContext ){
-        // RestAPI에 맞춰져 있는 context를 graphql 용으로 변환해야 한다~ 
         const ctx = GqlExecutionContext.create(context)
         console.log(ctx)
+        return ctx.getContext().req
+    }
+}
 
-        // GraphQL용 context의 request를 뽑아서 리턴
+export class GqlAuthRefreshGuard extends AuthGuard('refresh'){
+    getRequest(context: ExecutionContext ){
+        const ctx = GqlExecutionContext.create(context)
+        console.log(ctx)
         return ctx.getContext().req
     }
 }
