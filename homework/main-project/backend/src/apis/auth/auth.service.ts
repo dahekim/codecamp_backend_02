@@ -9,7 +9,7 @@ export class AuthService {
     setRefreshToken({ user, res }){
         const refreshToken =  this.jwtService.sign(
 
-            { email: user.email, sub : user.id },
+            { email: user.email_user, sub : user.id_user },
             { secret: 'myRefreshToken' , expiresIn: '2w'},
         )
         // 개발환경
@@ -29,9 +29,8 @@ export class AuthService {
         return this.jwtService.sign(
             // 이메일과 id
             { email_user: user.email, sub : user.id },
-
             // 비밀번호, 1시간 뒤에 파기
-            { secret: 'myAccessToken' , expiresIn: '1h'}
+            { secret: 'myAccessToken' , expiresIn: '20s'}
         )
     }
 }

@@ -88,8 +88,8 @@ type Query {
   fetchTattoos: [Tattoo!]!
   fetchTattoosWithDel(tattooId: String!): [Tattoo!]!
   fetchTattoo(tattooId: String!): Tattoo!
-  fetchUser: String!
-  updateUser(password: String!): Users!
+  fetchUser: Users!
+  updatePassword(password: String!): Users!
 }
 
 type Mutation {
@@ -101,8 +101,10 @@ type Mutation {
   createLocation(name: String!): TattooLocation!
   createGenre(name_genre: String!): TattooGenre!
   createType(name_type: String!): TattooType!
-  createUser(email: String!, password: String!, nickname: String!, birth: Float!, description: String!): Users!
+  createUser(email: String!, password: String!, nickname: String!, birth: Float!): Users!
+  deleteUser: Boolean!
   login(email_user: String!, password: String!): String!
+  restoreAccessToken: String!
 }
 
 input CreateTattooInput {

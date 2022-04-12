@@ -25,7 +25,8 @@ export class UserService {
     birth_user, 
     email_user, 
     hashedPassword: password, 
-    desc_user }) {
+    // desc_user 
+  }) {
     const user = await this.userRepository.findOne({
       where: { email_user : email_user  }
     });
@@ -36,7 +37,7 @@ export class UserService {
       birth_user,
       email_user,
       password,
-      desc_user,
+      // desc_user,
     });
   }
   

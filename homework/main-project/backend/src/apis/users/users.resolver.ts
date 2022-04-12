@@ -22,13 +22,15 @@ export class UserResolver {
     @Args('password') password: string,
     @Args('nickname') nickname_user: string,
     @Args('birth') birth_user: number,
-    @Args('description') desc_user: string,
+    // @Args('description') desc_user: string,
   )
   {
     const hashedPassword = await bcrypt.hash(password, 10).then(res => res)
     return this.userService.create({ 
       nickname_user, 
-      birth_user, email_user, hashedPassword, desc_user, })
+      birth_user, email_user, hashedPassword, 
+      //desc_user, 
+    })
   }
 
   // 회원정보 조회
@@ -49,7 +51,7 @@ export class UserResolver {
     @CurrentUser() currentUser: ICurrentUser,
   ){
     console.log("비밀번호가 변경되었습니다.")
-    await this.userService.update( {password, email_user : currentUser.email } )
+    await this.userService.update( {password, email_user : currentUser.email_user } )
     return await this.userService
   }
 
@@ -60,6 +62,6 @@ export class UserResolver {
     @CurrentUser() currentUser:ICurrentUser,
     ){
       console.log("회원삭제가 완료되었습니다.")
-      return await this.userService.delete({email_user : currentUser.email})
+      return await this.userService.delete({email_user : currentUser.email_user})
     }
 }
