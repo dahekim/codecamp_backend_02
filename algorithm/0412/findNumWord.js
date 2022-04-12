@@ -72,4 +72,6 @@ function solution(s){
         // /nine/g
         
         s = s.replace(regExp,i)
-    } }
+    } 
+    return Number(s)
+}
