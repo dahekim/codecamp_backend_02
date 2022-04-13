@@ -24,7 +24,7 @@ export class AuthService {
         // )
     }
 
-    // resolver의 user를 받아온다~ 
+    // resolver의 user를 받아온다. 
     getAccessToken( { user } ){
         return this.jwtService.sign(
             // 이메일과 id

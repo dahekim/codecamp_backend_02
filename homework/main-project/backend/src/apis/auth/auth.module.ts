@@ -8,6 +8,7 @@ import { Users } from "../users/entities/users.entity";
 import { JwtRefreshStrategy } from "src/commons/auth/jwt-refresh.strategy";
 import { JwtGoogleStrategy } from "src/commons/auth/jwt-social-google.strategy";
 import { AuthController } from "./auth.controller";
+import { JwtNaverStrategy } from "src/commons/auth/jwt-social-naver.strategy";
 
 
 @Module({
@@ -16,6 +17,7 @@ import { AuthController } from "./auth.controller";
         TypeOrmModule.forFeature([Users])
     ],
     providers:[
+        JwtNaverStrategy,
         JwtGoogleStrategy,
         JwtRefreshStrategy,
         AuthResolver,
