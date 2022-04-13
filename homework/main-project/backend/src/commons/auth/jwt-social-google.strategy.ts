@@ -16,9 +16,9 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
     // 2. 검증 완료 시 validate 실행, accessToken/refreshToken/profile 받아온다~
     validate( accessToken: string, refreshToken: string, profile: any ){
-        console.log(accessToken)
-        console.log(refreshToken)
-        console.log(profile)
+        // console.log(accessToken)
+        // console.log(refreshToken)
+        // console.log(profile.email)
 
         return {
             email_user: profile.emails[0].value,

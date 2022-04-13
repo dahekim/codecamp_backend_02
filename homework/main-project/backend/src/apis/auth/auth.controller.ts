@@ -61,7 +61,7 @@ export class AuthController{
 
         // 1. 가입확인
         let user = await this.userService.findOne({email_user : req.user.email_user})
-        console.log(user)
+        //console.log(user)
         // 2. 회원가입 - 유저가 아니라면 회원가입
         if(!user){
             user = await this.userService.create({
@@ -88,12 +88,11 @@ export class AuthController{
         @Req() req: Request & IOAuthUser,
         @Res() res: Response,
     ) {
-        console.log(req.user.email_user)
-        // req.user.email_user
 
         // 1. 가입확인
         let user = await this.userService.findOne({email_user : req.user.email_user})
-        console.log(user)
+        
+
         // 2. 회원가입 - 유저가 아니라면 회원가입
         if(!user){
             user = await this.userService.create({

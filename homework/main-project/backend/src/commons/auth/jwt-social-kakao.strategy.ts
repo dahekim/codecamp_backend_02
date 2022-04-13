@@ -14,15 +14,12 @@ export class JwtKakaoStrategy extends PassportStrategy( Strategy, 'kakao') {
 
     // 2. 검증 완료 시 validate 실행, accessToken/refreshToken/profile 받아온다~
     validate( accessToken: string, refreshToken: string, profile: any ){
-        console.log(accessToken)
-        console.log(refreshToken)
-        console.log(profile)
 
         return {
-            email_user: profile.email,
+            email_user: profile._json.kakao_account.email,
             password: "qwer1234",
-            nickname_user: profile.displayName,
-            birth_user: "2020-03-15",
+            nickname_user: "ㅇ아아아",
+            birth_user: "2010-03-15",
         }
     }
 }
