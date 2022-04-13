@@ -14,7 +14,7 @@ export class AuthService {
             { secret: 'myRefreshToken' , expiresIn: '2w'},
         )
         // 개발환경
-        res.setHeader( "Set-Cookie" , `refreshToken = ${refreshToken}` )
+        res.setHeader( "Set-Cookie" , `refreshToken = ${refreshToken}; path=/;` )
         console.log(refreshToken)
 
         // 배포환경

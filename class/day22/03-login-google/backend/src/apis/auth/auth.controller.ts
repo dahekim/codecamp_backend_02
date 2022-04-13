@@ -47,5 +47,6 @@ export class AuthController{
         res.redirect(
             "http://localhost:5500/class/day22/03-login-google/frontend/social-login.html"
         )
+        // 쿠키에 refreshToken 있으면 로그인 성공~! 
     }
 }

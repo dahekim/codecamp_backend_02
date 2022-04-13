@@ -8,8 +8,8 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // 개발자 사이트에서 아래에 어떤거 적어야 하는지 확인하기...(여긴 구글 기준)
     constructor(){
         super ({
-            clientID: '입력하기',
-            clientSecret: '입력하기',
+            clientID: '입력하기', // <받아온 클라이언트 아이디 여기에 넣기 (이하동일)
+            clientSecret: '입력하기', 
             clientURL: '입력하기',
             scope: ['email', 'profile']
         })
