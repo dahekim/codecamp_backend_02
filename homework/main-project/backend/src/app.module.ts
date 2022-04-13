@@ -29,10 +29,11 @@ import { AuthModule } from './apis/auth/auth.module';
         
         TypeOrmModule.forRoot({
             type: 'mysql',
-            // host: 'my-database',
+            //host: 'my-database',
             host: 'localhost',
             port: 3306,
             username: 'root',
+            //password: 'root',
             password: 'qwer1234',
             //database: 'mydocker02',
             database: 'myproject02',
