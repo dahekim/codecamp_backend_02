@@ -38,7 +38,7 @@
             }, 
             function (rsp) { 
                 // callback
-                if (rsp.success) { // 결제 성공 시 로직, 우리 백엔드에 데이터를 넘겨줌,
+                if (rsp.success) { // 결제 성공 시 동작하는 로직,백엔드에 데이터를 넘겨줌,
                     console.log(rsp)
                     axios.post(
                         "http://localhost:3000/graphql",
