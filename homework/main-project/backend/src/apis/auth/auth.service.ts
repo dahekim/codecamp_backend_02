@@ -10,14 +10,15 @@ export class AuthService {
  
     ){}
     setRefreshToken({ user, res }){
-        const refreshToken =  this.jwtService.sign(
+        let refreshToken =  this.jwtService.sign(
 
             { email: user.email_user, sub : user.id_user },
             { secret: 'myRefreshToken' , expiresIn: '2w'},
         )
         // 개발환경
-        res.setHeader( "Set-Cookie" , `refreshToken = ${refreshToken}; path=/;` )
+        res.setHeader('Set-Cookie',`refreshToken=${refreshToken}; path=/;`)
         console.log(refreshToken)
+        
 
         // 배포환경
         // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')
@@ -49,7 +50,7 @@ export class AuthService {
         }
         this.setRefreshToken({ user, res })
         res.redirect(
-            "http://127.0.0.1:5500/homework/main-project/frontend/login/index.html"
+            "http://localhost:5500/homework/main-project/frontend/login/index.html"
         )
     }
 }
