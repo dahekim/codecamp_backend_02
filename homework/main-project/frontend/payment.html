@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>💰 결제하기 💰</title>
+        <!-- JQuery -->
+        <script
+        type="text/javascript"
+        src="https://code.jquery.com/jquery-1.12.4.min.js"
+        ></script>
+        <!-- iamport.payment.js -->
+        <script
+        type="text/javascript"
+        src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
+        ></script>
+        <!-- Axios -->
+        <script
+        type="text/javascript"
+        src="https://unpkg.com/axios/dist/axios.min.js"
+        ></script>
+        <script>
+        function mypayment() {
+            const myAmount = Number(document.getElementById("amount").value);
+            const IMP = window.IMP; // 생략 가능
+            IMP.init("imp06220931"); // Example: imp00000000
+
+            IMP.request_pay({ // param
+                pg: "html5_inicis",
+                pay_method: "card",
+                name: "마우스",
+                amount: myAmount,
+                buyer_email: "gildong@gmail.com",
+                buyer_name: "홍길동",
+                buyer_tel: "010-4242-4242",
+                buyer_addr: "서울특별시 강남구 신사동",
+                buyer_postcode: "01181",
+                m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
+            },
+            async (rsp) => {
+            // callback
+            if (rsp.success) {// / 결제 성공 시 동작하는 로직,백엔드에 데이터를 넘겨줌,
+                console.log(rsp);
+                const data = await axios.post(
+                    "http://localhost:3000/graphql",
+                    {
+                        query: `
+                        mutation {
+                            createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}) { id }
+                        }
+                    `,
+                },
+                {
+                    headers: {
+                    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYS5jb20iLCJzdWIiOiJhNjY2Njc1YS02MjQ3LTQ2NjktYTQyYy1jNjk4MDQwNWIwODUiLCJpYXQiOjE2NDQwNDgxNTksImV4cCI6MTY0NDA1MTc1OX0.zFC8DbpzQQbCvgGqCfQ05aknU-IkNEIAKyM4uflp9Mc"
+                }
+                });
+                console.log(data);
+            } else { // 결제 실패시
+                alert("결제에 실패했습니다.")
+            }
+        });
+    }
+    </script>
+    </head>
+    <body>
+    결제할 금액: <input type="text" id="amount" />
+    <button onclick="mypayment()">결제하기</button>
+</body>
+</html>
