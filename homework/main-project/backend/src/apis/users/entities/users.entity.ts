@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Review } from 'src/apis/review/entities/review.entity';
 import {
   Column,
@@ -50,4 +50,8 @@ export class Users {
   @ManyToMany(() => Review, (reviews) => reviews.users)
   @Field(() => [Review])
   reviews: Review[];
+
+  @Column({default:0})
+  @Field(()=>Int)
+  point:number
 }

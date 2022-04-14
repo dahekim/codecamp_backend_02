@@ -9,17 +9,19 @@ import { LocationModule } from './apis/location/location.module';
 import { TypeModule } from './apis/tattoo_type/type.module';
 import { UserModule } from './apis/users/users.module'
 import { AuthModule } from './apis/auth/auth.module';
+import { PointTransactionModule } from './apis/pointTransaction/pointTransaction.module';
 
 
 @Module({
     imports: [
-        TattooModule,
+        AuthModule,
         BodypartModule,
-        LocationModule,
         GenreModule,
+        LocationModule,
+        TattooModule,
         TypeModule,
+        PointTransactionModule,
         UserModule,
-        AuthModule,  
 
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
