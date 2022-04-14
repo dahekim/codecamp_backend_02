@@ -2,6 +2,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+
 import { TattooModule } from './apis/tattoo/tattoo.module';
 import { BodypartModule } from './apis/bodypart/bodypart.module';
 import { GenreModule } from './apis/tattoo_genre/genre.module'
@@ -9,7 +11,7 @@ import { LocationModule } from './apis/location/location.module';
 import { TypeModule } from './apis/tattoo_type/type.module';
 import { UserModule } from './apis/users/users.module'
 import { AuthModule } from './apis/auth/auth.module';
-import { PointTransactionModule } from './apis/pointTransaction/pointTransaction.module';
+import { TransactionModule } from './apis/transaction/transaction.module';
 
 
 @Module({
@@ -20,7 +22,7 @@ import { PointTransactionModule } from './apis/pointTransaction/pointTransaction
         LocationModule,
         TattooModule,
         TypeModule,
-        PointTransactionModule,
+        TransactionModule,
         UserModule,
 
         GraphQLModule.forRoot<ApolloDriverConfig>({

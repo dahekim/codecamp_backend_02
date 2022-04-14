@@ -2,22 +2,24 @@ import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
 import { CurrentUser, ICurrentUser } from "src/commons/auth/gql-user.param";
-import { PointTransaction } from "./entities/pointTransaction.entity";
-import { PointTransactionService } from "./pointTransaction.service";
+import { Transaction } from "./entities/transaction.entity";
+import { TransactionService } from "./transaction.service";
 
 @Resolver()
-export class PointTransactionResolver{
+export class TransactionResolver{
     constructor(
-        private readonly pointTransactionService: PointTransactionService
+        private readonly transactionService: TransactionService
     ){}
 
     @UseGuards(GqlAuthAccessGuard)
-    @Mutation(()=> PointTransaction)
+    @Mutation(()=> Transaction)
     createPointTransaction(
         @Args('impUid') impUid: string,
         @Args('amount') amount: number,
         @CurrentUser() currentUser : ICurrentUser,
     ){
-        return this.pointTransactionService.create({ impUid, amount, currentUser })
+        console.log('📛',impUid)
+        
+        return this.transactionService.create({ impUid, amount, currentUser })
     }
 }

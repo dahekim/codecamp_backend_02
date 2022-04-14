@@ -34,7 +34,7 @@ export class AuthService {
             // 이메일과 id
             { email_user: user.email, sub : user.id },
             // 비밀번호, 1시간 뒤에 파기
-            { secret: 'myAccessToken' , expiresIn: '20s'}
+            { secret: 'myAccessToken' , expiresIn: '1h'}
         )
     }
 

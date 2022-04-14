@@ -15,13 +15,13 @@ export class Users {
   @Field(() => String)
   id_user: string;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ unique: false /*true*/ , nullable: false })
   @Field(() => String)
   nickname_user: string;
 
   @Column()
-  @Field(() => Date)
-  birth_user: Date;
+  @Field(() => Int)
+  birth_user: number;
 
   @Column({ unique: true, nullable: false })
   @Field(() => String)
@@ -51,7 +51,7 @@ export class Users {
   @Field(() => [Review])
   reviews: Review[];
 
-  @Column({default:0})
+  @Column( {default:0} )
   @Field(()=>Int)
   point:number
 }

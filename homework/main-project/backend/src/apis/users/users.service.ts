@@ -25,19 +25,23 @@ export class UserService {
     birth_user, 
     email_user, 
     hashedPassword: password, 
-    // desc_user 
   }) {
     const user = await this.userRepository.findOne({
       where: { email_user : email_user  }
     });
-    if (user) throw new ConflictException('이미 등록된 이메일입니다.');
+    if (user) throw new ConflictException("이미 등록된 이메일입니다.")
+
+    // const isSameNick = await this.userRepository.findOne({
+    //   where: {nickname_user: nickname_user}
+    // })
+    // if (isSameNick) throw new ConflictException("이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.")
+
 
     return await this.userRepository.save({
       nickname_user,
       birth_user,
       email_user,
       password,
-      // desc_user,
     });
   }
   
@@ -51,7 +55,7 @@ export class UserService {
         ...pw_update,
         password: hashedPassword,
       }
-      return await this.userRepository.save(pw_update)
+      return await this.userRepository.save(newPassword)
     }
 
     async delete(email_user){
