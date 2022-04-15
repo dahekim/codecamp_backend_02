@@ -16,7 +16,7 @@ export class TransactionService{
     ){}
     
     async create( { impUid, amount, currentUser } ){
-        // 1. pointTransaction 테이블의 거래기록 1줄을 생성, 
+        // 1. transaction 테이블의 거래기록 1줄을 생성, 
         // (db에 거래기록만 반영되고 실제로 포인트가 올리가지는 않은 상태)
         const transaction = await this.transactionRepository.save({
             impUid: impUid,
@@ -38,4 +38,6 @@ export class TransactionService{
         return transaction
 
     }
+
+    
 }

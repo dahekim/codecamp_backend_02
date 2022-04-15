@@ -7,9 +7,9 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // 모든 인증은 다 구글에서 이뤄지고 검증되기 때문에 클라이언트 아이디 입력하기
     constructor(){
         super ({
-            clientID: '368802247059-pdu6d0u4kdfs45l3qk51uhe31de7u1sj.apps.googleusercontent.com',
-            clientSecret: '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', 
-            callbackURL: 'http://localhost:3000/login/google',
+            clientID: process.env.OAUTH_GOOGLE_ID,
+            clientSecret: process.env.OAUTH_GOOGLE_SECRET, 
+            callbackURL: process.env.OAUTH_GOOGLE_CALLBACK,
             scope: ['email', 'profile']
         })
     }

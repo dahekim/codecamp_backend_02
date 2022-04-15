@@ -7,9 +7,9 @@ export class JwtNaverStrategy extends PassportStrategy( Strategy, 'naver') {
     // 네이버에서 인증 및 검증이 모두 되기 때문에 클라이언트 아이디 입력하기
     constructor(){
         super ({
-            clientID: 'SaQWKMWI8mRgZOlFV2e6',
-            clientSecret: 'YxWJiM6SZ1', 
-            callbackURL: 'http://localhost:3000/login/naver',
+            clientID: process.env.OAUTH_NAVER_ID,
+            clientSecret: process.env.OAUTH_NAVER_SECRET, 
+            callbackURL: process.env.OAUTH_NAVER_CALLBACK,
         })
     }
 

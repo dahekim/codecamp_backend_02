@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, registerEnumType } from "@nestjs/graphql"
 import { Users } from "src/apis/users/entities/users.entity"
-import { Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn, Entity  } from "typeorm"
+import { Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn, Entity , UpdateDateColumn } from "typeorm"
 
 export enum TRANSACTION_STATUS_ENUM{
     PAYMENT='PAYMENT',
@@ -40,4 +40,9 @@ export class Transaction{
     @CreateDateColumn()             
     @Field(()=>Date)
     createdAt: Date
+
+    // 검증여부
+    @UpdateDateColumn({})
+    @Field(()=>Date)
+    isChecked: Date
 }
