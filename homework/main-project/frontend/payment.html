@@ -1,68 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>💰 결제하기 💰</title>
-        <!-- JQuery -->
-        <script
-        type="text/javascript"
-        src="https://code.jquery.com/jquery-1.12.4.min.js"
-        ></script>
-        <!-- iamport.payment.js -->
-        <script
-        type="text/javascript"
-        src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
-        ></script>
-        <!-- Axios -->
-        <script
-        type="text/javascript"
-        src="https://unpkg.com/axios/dist/axios.min.js"
-        ></script>
-        <script>
-        function mypayment() {
-            const myAmount = Number(document.getElementById("amount").value);
-            const IMP = window.IMP; // 생략 가능
-            IMP.init("imp06220931"); // Example: imp00000000
+  <head>
+    <title>💰 결제하기 테스트 페이지 💰</title>
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+    ></script>
+    <!-- iamport.payment.js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
+    ></script>
+    <!-- Axios -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/axios/dist/axios.min.js"
+    ></script>
+    <!-- jQuery CDN --->
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"
+    ></script>
 
-            IMP.request_pay({ // param
-                pg: "html5_inicis",
-                pay_method: "card",
-                name: "마우스",
-                amount: myAmount,
-                buyer_email: "gildong@gmail.com",
-                buyer_name: "홍길동",
-                buyer_tel: "010-4242-4242",
-                buyer_addr: "서울특별시 강남구 신사동",
-                buyer_postcode: "01181",
-                m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
-            },
-            async (rsp) => {
+    <script>
+      // 로그인 한 id의 session token
+      const token = "";
+
+      // 결제 API
+      function mypayment() {
+        // 결제할 액수
+        const myAmount = Number(document.getElementById("amount").value);
+        const myTattoo = document.getElementById("tattooId").value
+        
+        const IMP = window.IMP; // 생략 가능
+        IMP.init("imp06220931"); // Example: imp00000000
+
+        IMP.request_pay(
+          {
+            // param
+            pg: "html5_inicis",
+            pay_method: "card",
+            name: "타투0000001(테스트)",
+            amount: myAmount,
+            buyer_email: "test@test.com",
+            buyer_name: "김다혜",
+            buyer_tel: "010-1234-5678",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
+          },
+          async (rsp) => {
             // callback
-            if (rsp.success) {// / 결제 성공 시 동작하는 로직,백엔드에 데이터를 넘겨줌,
-                console.log(rsp);
-                const data = await axios.post(
-                    "http://localhost:3000/graphql",
-                    {
-                        query: `
+            if (rsp.success) {
+              // 결제 성공 시 동작하는 로직
+              // 백엔드에 데이터(imp_uid)를 넘겨준다.
+              console.log(rsp);
+              const data = await axios.post(
+                "http://localhost:3000/graphql",
+                {
+                  query: `
                         mutation {
-                            createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}) { id }
+                            createTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}, tattooId: ${myTattoo}") 
+                            { id }
                         }
                     `,
                 },
                 {
-                    headers: {
-                    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDk5MzgzODksImV4cCI6MTY0OTk0MTk4OX0.1n79ablDke0slTwacxtUP3MagMNW__uZYj3968UD5g0"
+                  headers: {
+                    authorization:
+                      // 로그인 한 id의 session token 가져오기
+                      `Bearer ${token}`,
+                  },
                 }
-                });
-                console.log(data);
-            } else { // 결제 실패시
-                alert("결제에 실패했습니다.")
+              );
+              alert("💡결제에 성공했습니다.");
+              console.log(data);
+              console.log("💡결제성공");
+            } else {
+              // 결제 실패시
+              alert("❗❗❗결제에 실패했습니다.");
+              console.log("❗❗❗결제에 실패했습니다.");
             }
-        });
-    }
+          }
+        );
+      }
+      
+      function myrefund(){
+        const myCancelUid = document.getElementById("tattooId").value
+        const data = await axios.post("http://localhost:3000/graphql",
+        {
+          query: `
+            mutation {
+              cancelTransaction( tattooId: "${myTattoo}" )
+              { id }
+          }`, 
+        },
+        {
+          headers:{
+            authorization: 
+            `Bearer ${token}`,
+          },
+        }
+        )
+        alert("💡정상적으로 취소되었습니다.");
+        console.log(data);
+        console.log("💡결제취소 완료");
+      } 
     </script>
-    </head>
-    <body>
+  </head>
+    타투ID: <input type="text" id="tattooId" />
     결제할 금액: <input type="text" id="amount" />
     <button onclick="mypayment()">결제하기</button>
-</body>
+    <hr />
+    환불받을 타투ID : <input type="text" id="tattooId"/>
+    <button onclick="myrefund()">결제 취소하기</button>
+  </body>
 </html>
