@@ -29,7 +29,12 @@ export class TransactionResolver {
     console.log('📛', accessToken);  
     await this.iamportService.isExist({ impUid, accessToken, amount });
     await this.transactionService.isDuplicate({ impUid })
-    return this.transactionService.create({ impUid, amount, currentUser, status:TRANSACTION_STATUS_ENUM.PAYMENT});
+    return this.transactionService.create({ 
+      impUid, 
+      amount, 
+      currentUser, 
+      status:TRANSACTION_STATUS_ENUM.PAYMENT
+    });
   }
 
   // 결제 취소 
@@ -51,7 +56,7 @@ export class TransactionResolver {
     const accessToken = await this.iamportService.getIamportAccessToken()
     const cancelAmount = await this.iamportService.cancel({impUid, accessToken})
 
-    this.transactionService.cancel({
+    return await this.transactionService.cancel({
       impUid, 
       amount: cancelAmount, 
       currentUser,

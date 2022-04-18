@@ -23,8 +23,8 @@ export class IamportService {
   }
   async isExist({ impUid, accessToken, amount }){
     try{
-      const result = await axios.get
-      (`https://api.import.payments/${impUid}`,
+      const result = await axios.get(
+      `https://api.import.kr/payments/${impUid}`,
       { headers: {Authorization: accessToken} },
       )
       if (result.data.response.status !== "paid")
@@ -41,5 +41,19 @@ export class IamportService {
           throw error
         }
       }}
+  async cancel({impUid,accessToken}){
+    try{
+      const result = await axios.post('https://api.iamport.kr/payments/cancel',
+      { imp_uid:impUid }, 
+      { headers: { Authorization: accessToken } }, 
+      )
+      return result.data.response.cancel_amount
+    } catch(error) {
+      throw new HttpException(
+        error.response.data.message,
+        error.response.status,
+        )
+    }
+  }
     
 }

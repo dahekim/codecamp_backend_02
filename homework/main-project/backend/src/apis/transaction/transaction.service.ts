@@ -71,12 +71,13 @@ export class TransactionService {
     async create({ impUid,amount, currentUser, status, }) {
       // 1. transaction 테이블의 거래기록 1줄을 생성,
       // (db에 거래기록만 반영되고 실제로 포인트가 올리가지는 않은 상태)
-      const transaction = await this.transactionRepository.save({
+      const transaction = await this.transactionRepository.create({
         impUid: impUid,
         amount: amount,
         user: currentUser.id_user,
         status: TRANSACTION_STATUS_ENUM.PAYMENT,
       });
+      await this.transactionRepository.save(transaction)
 
       // 2. 유저의 포인트 데이터 찾아와서 업데이트하기
       const user = await this.userRepository.findOne({

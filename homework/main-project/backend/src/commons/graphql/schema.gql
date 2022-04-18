@@ -83,6 +83,7 @@ type TattooTag {
 type Transaction {
   id: String!
   impUid: String!
+  tattooId: String!
   amount: Int!
   status: TRANSACTION_STATUS_ENUM!
   user: Users!
@@ -118,7 +119,8 @@ type Mutation {
   deleteTattoo(tattooId: String!): Boolean!
   restoreTattoo(tattooId: String!): Boolean!
   createType(name_type: String!): TattooType!
-  createPointTransaction(impUid: String!, amount: Float!): Transaction!
+  createTransaction(impUid: String!, amount: Float!): Transaction!
+  cancelTransaction(impUid: String!): Transaction!
   createUser(email: String!, password: String!, nickname: String!, birth: Float!): Users!
   deleteUser: Boolean!
 }
