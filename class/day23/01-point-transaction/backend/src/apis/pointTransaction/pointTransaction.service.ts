@@ -24,6 +24,7 @@ export class PointTransactionService{
             user: currentUser,
             status:POINT_TRANSACTION_STATUS_ENUM.PAYMENT,
         })
+        await this.pointTransactionRepository.save(pointTransaction)
 
         // 2. 유저의 포인트 데이터 찾아와서 업데이트하기 
         const user = await this.userRepository.findOne({ id: currentUser.id })
