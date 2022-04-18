@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import axios from 'axios';
 import 'dotenv/config';
 
@@ -6,29 +6,40 @@ import 'dotenv/config';
 export class IamportService {
   // 1. 아임포트에서 Access Token 요청
   async getIamportAccessToken() {
-    const token = await axios({
-      url: 'https://api.iamport.kr/users/getToken',
-      method: 'post', // POST method
-      headers: { 'Content-Type': 'application/json' }, // "Content-Type": "application/json"
-      data: {
-        imp_key: process.env.REST_API_IMP_KEY, // REST API 키
-        imp_secret: process.env.REST_API_SECRET, // REST API Secret
-      },
-    });
-    return token.data.response.access_token;
+    try{
+      const token = await axios.post('https://api.iamport.kr/users/getToken', {
+      imp_key: process.env.REST_API_IMP_KEY,
+      imp_secret : process.env.REST_API_SECRET,})
+      
+      console.log("⭕️ 토큰이 생성되었습니다. :" + token.data.response.access_token)
+      return token.data.response.access_token
+
+    } catch (error){
+      console.log(`⛔️ 에러 발생! ${error.response.data.message}`)
+      throw new HttpException(
+        error.response.data.message,
+        error.response.status,
+      )}
   }
-
-  // 2-1. 유효한 imp_uid인지 확인
-  async isValidUid({ impUid, accessToken }) {
-    await axios({});
-  }
-
-  // 2-2. 결제 테이블에 추가된 아이디인지 확인
-
-  // 2-3. 이미 등록된 아이디인지 확인
-
-  // 3. 검증이 완료된 데이터를 transaction 테이블에 추가
-  async getRefund() {}
-
-  async;
+  async isExist({ impUid, accessToken, amount }){
+    try{
+      const result = await axios.get
+      (`https://api.import.payments/${impUid}`,
+      { headers: {Authorization: accessToken} },
+      )
+      if (result.data.response.status !== "paid")
+        throw new ConflictException("결제 내역이 존재하지 않습니다.")
+      if(result.data.response.amount !== amount)
+        throw new UnprocessableEntityException("결제 금액이 잘못되었습니다.")
+    } catch (error){
+      if(error?.response?.data?.message){
+        throw new HttpException(
+          error.response.data.message,
+          error.response.status,
+          )
+        } else {
+          throw error
+        }
+      }}
+    
 }

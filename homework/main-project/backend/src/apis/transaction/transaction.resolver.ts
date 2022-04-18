@@ -3,7 +3,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
 import { IamportService } from '../iamport/iamport.service';
-import { Transaction } from './entities/transaction.entity';
+import { Transaction, TRANSACTION_STATUS_ENUM } from './entities/transaction.entity';
 import { TransactionService } from './transaction.service';
 
 @Resolver()
@@ -13,6 +13,7 @@ export class TransactionResolver {
     private readonly iamportService: IamportService,
   ) {}
 
+  // 결제 등록
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Transaction)
   async createTransaction(
@@ -21,24 +22,39 @@ export class TransactionResolver {
     @CurrentUser() currentUser: ICurrentUser,
   ) {
     // 1. 아임포트에서 Access Token 받아오기
-    const accessToken = await this.iamportService.getIamportAccessToken();
-    console.log('📛', accessToken);
-
-    // 2-1. 액세스 토큰이 유효한지 확인
-    await this.iamportService.isValidUid({ impUid, accessToken });
-    // 2-2. 결제 테이블에 이미 있는 아이디인지 확인
-    await this.transactionService.isExist({ impUid });
+    // 2-1. 결제 완료 기록이 존재하는지 확인
+    // 2-2. transaction 테이블에 impUid가 한번만 존재하는지 확인 (중복결제 체크)
     // 3. 트랜잭션 테이블에 추가
-    return this.transactionService.create({ impUid, amount, currentUser });
+    const accessToken = await this.iamportService.getIamportAccessToken();
+    console.log('📛', accessToken);  
+    await this.iamportService.isExist({ impUid, accessToken, amount });
+    await this.transactionService.isDuplicate({ impUid })
+    return this.transactionService.create({ impUid, amount, currentUser, status:TRANSACTION_STATUS_ENUM.PAYMENT});
   }
 
+  // 결제 취소 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Transaction)
-  cancelTransaction(
+  async cancelTransaction(
     @Args('impUid') impUid: string,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    console.log('📛📛', impUid);
-    return this.transactionService.cancel({ impUid, currentUser });
+    // 1. 이미 취소된 건인지 확인
+    // 2. 취소하기에 충분한 포인트 잔액이 남아있는지 확인
+    // 3. 실제로 아임포트에 취소 요청하기
+    // 4. transaction 테이블에서 결제 취소 등록하기 
+    // (수정X, 똑같은 데이터를 하나 더 추가하는데 status를 cancel로 입력)
+
+    await this.transactionService.isCanceled({ impUid })
+    await this.transactionService.isExistCanceledPoint({impUid, currentUser})
+
+    const accessToken = await this.iamportService.getIamportAccessToken()
+    const cancelAmount = await this.iamportService.cancel({impUid, accessToken})
+
+    this.transactionService.cancel({
+      impUid, 
+      amount: cancelAmount, 
+      currentUser,
+    })
   }
 }
