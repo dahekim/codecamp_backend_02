@@ -39,7 +39,7 @@ export class TattooService {
   }
   async findOne({ tattooId }) {
     return await this.tattooRepository.findOne({
-      where: { id_tattoo: tattooId },
+      where: { tattooId: tattooId },
       relations: [
         'method',
         'design',
@@ -108,7 +108,7 @@ export class TattooService {
 
   async update({ tattooId, updateTattooInput }) {
     const tattoo = await this.tattooRepository.findOne({
-      where: { id_tattoo: tattooId },
+      where: { tattooId: tattooId },
     });
 
     const updateTattoo = {
@@ -121,7 +121,7 @@ export class TattooService {
   // 작업 착수 여부 체크 함수
   async checkStart({ tattooId }) {
     const tattoo = await this.tattooRepository.findOne({
-      where: { id_tattoo: tattooId },
+      where: { tattooId: tattooId },
     });
 
     if (tattoo.isStart)
@@ -132,14 +132,14 @@ export class TattooService {
   // 타투 삭제
   async delete({ tattooId }) {
     const result = await this.tattooRepository.softDelete({
-      id_tattoo: tattooId,
+      tattooId: tattooId,
     });
     return result.affected ? true : false;
   }
 
   // 삭제 데이터 복구
   async restore({ tattooId }) {
-    const result = await this.tattooRepository.restore({ id_tattoo: tattooId });
+    const result = await this.tattooRepository.restore({ tattooId: tattooId });
     return result.affected ? true : false;
   }
 }

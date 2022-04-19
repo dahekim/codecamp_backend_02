@@ -112,6 +112,7 @@ type Mutation {
   login(email_user: String!, password: String!): String!
   restoreAccessToken: String!
   createBodypart(name: String!, size: String!): Bodypart!
+  uploadFile(files: [Upload!]!): [String!]!
   createGenre(name_genre: String!): TattooGenre!
   createLocation(name: String!): TattooLocation!
   createTattoo(createTattooInput: CreateTattooInput!): Tattoo!
@@ -124,6 +125,9 @@ type Mutation {
   createUser(email: String!, password: String!, nickname: String!, birth: Float!): Users!
   deleteUser: Boolean!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input CreateTattooInput {
   name_tattoo: String!

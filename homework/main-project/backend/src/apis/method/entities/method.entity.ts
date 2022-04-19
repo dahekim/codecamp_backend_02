@@ -11,6 +11,4 @@ export class Method {
     @Column()
     @Field(() => String)
     name_method: string
-
-
 }

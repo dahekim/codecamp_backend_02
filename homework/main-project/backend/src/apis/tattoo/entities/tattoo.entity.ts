@@ -12,21 +12,28 @@ import {
 
 import { Design } from 'src/apis/design/entities/design.entity';
 import { Method } from 'src/apis/method/entities/method.entity';
+
 import { Users } from 'src/apis/users/entities/users.entity';
+
 import { Bodypart } from 'src/apis/bodypart/entities/bodypart.entity';
+
 import { TattooLocation } from 'src/apis/location/entities/location.entity';
+
 import { TattooType } from 'src/apis/tattoo_type/entities/tattooType.entity';
 import { TattooGenre } from 'src/apis/tattoo_genre/entities/tattooGenre.entity';
 
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+
 import { TattooTag } from 'src/apis/tag/entities/tattooTag.entity';
+
+import { Image } from 'src/apis/image/entities/image.entity';
 
 @Entity()
 @ObjectType()
 export class Tattoo {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
-  id_tattoo: string;
+  tattooId: string;
 
   @Column()
   @Field(() => String)
@@ -78,25 +85,31 @@ export class Tattoo {
   users: Users;
 
   // 1:N
-  // 2. 신체부위 및 타투 사이즈 테이블
+  // 타투 이미지 테이블
+  @ManyToOne(() => Image)
+  @Field(()=> Image)
+  imgUrl: Image 
+
+  // 1:N
+  // 신체부위 및 타투 사이즈 테이블
   @ManyToOne(() => Bodypart)
   @Field(() => Bodypart)
   bodypart: Bodypart;
 
   // 1:N
-  // 3. 지역 테이블
+  // 지역 테이블
   @ManyToOne(() => TattooLocation)
   @Field(() => TattooLocation)
   tattoolocation: TattooLocation;
 
   // 1:N
-  // 4. 타투 종류 테이블
+  // 타투 종류 테이블
   @ManyToOne(() => TattooType)
   @Field(() => TattooType)
   tattooType: TattooType;
 
   // 1:N
-  // 5. 타투 장르 테이블
+  // 타투 장르 테이블
   @ManyToOne(() => TattooGenre)
   @Field(() => TattooGenre)
   tattooGenre: TattooGenre;

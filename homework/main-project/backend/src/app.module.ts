@@ -11,11 +11,13 @@ import { TypeModule } from './apis/tattoo_type/type.module';
 import { UserModule } from './apis/users/users.module';
 import { AuthModule } from './apis/auth/auth.module';
 import { TransactionModule } from './apis/transaction/transaction.module';
+import { FileModule } from './apis/file/file.module';
 
 @Module({
   imports: [
     AuthModule,
     BodypartModule,
+    FileModule,
     GenreModule,
     LocationModule,
     TattooModule,

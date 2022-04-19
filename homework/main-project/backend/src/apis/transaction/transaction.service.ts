@@ -71,6 +71,7 @@ export class TransactionService {
           status: TRANSACTION_STATUS_ENUM.CANCEL,
         })
         await queryRunner.manager.save(transaction)
+        
         await queryRunner.commitTransaction()
         return transaction
       } catch(error) {
