@@ -11,7 +11,7 @@ export class FileResolver{
 
     @Mutation(() => [String])
     uploadFile(
-        @Args({name:'files', type: () => [ GraphQLUpload ] }) files: FileUpload[]
+        @Args({name: 'files', type: () => [ GraphQLUpload ] }) files: FileUpload[]
         // 브라우저에서 받아올 때는 GraphQLUpload 타입
         // service로 넘어갈 때는 FileUpload 타입이라고 명시
     ){

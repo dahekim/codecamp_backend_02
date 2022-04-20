@@ -26,7 +26,6 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 import { TattooTag } from 'src/apis/tag/entities/tattooTag.entity';
 
-import { Image } from 'src/apis/image/entities/image.entity';
 
 @Entity()
 @ObjectType()

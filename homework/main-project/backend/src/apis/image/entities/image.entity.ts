@@ -20,6 +20,6 @@ export class Image {
 
     @JoinColumn()
     @ManyToOne(()=> Tattoo)
-    @Field(() => Tattoo, { nullable: false })
-    tattooId?: Tattoo
+    @Field(() => Tattoo)
+    tattooId: Tattoo
 }

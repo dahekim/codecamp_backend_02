@@ -55,12 +55,6 @@ type TattooGenre {
   name_genre: String!
 }
 
-type Image {
-  id_img: String!
-  url: String!
-  tattooId: Tattoo!
-}
-
 type Tattoo {
   tattooId: String!
   name_tattoo: String!
@@ -73,7 +67,6 @@ type Tattoo {
   design: Design!
   method: Method!
   users: Users!
-  imgUrl: Image!
   bodypart: Bodypart!
   tattoolocation: TattooLocation!
   tattooType: TattooType!
@@ -121,6 +114,8 @@ type Mutation {
   createBodypart(name: String!, size: String!): Bodypart!
   uploadFile(files: [Upload!]!): [String!]!
   createGenre(name_genre: String!): TattooGenre!
+  addImgUrl(tattooId: String!, urls: [String!]!): [String!]!
+  updateImgUrl(tattooId: String!, urls: [String!]!): [String!]!
   createLocation(name: String!): TattooLocation!
   createTattoo(createTattooInput: CreateTattooInput!): Tattoo!
   updateTattoo(tattooId: String!, updateTattooInput: UpdateTattooInput!): Tattoo!

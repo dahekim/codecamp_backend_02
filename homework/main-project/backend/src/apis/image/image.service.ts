@@ -17,14 +17,14 @@ export class ImageService{
     ){}
 
     // tattooId, 이미지 urls을 테이블에 추가 
-    async add({ tattooId, imgUrls }){
+    async add({ tattooId, urls }){
         const tattoo = await this.tattooRepository.findOne({ 
             where: { tattooId: tattooId }
         })
         
         const results = 
         await Promise.all(
-            imgUrls.map( url => { this.imageRepository.save( { tattoo, url } )
+            urls.map( url => { this.imageRepository.save( { tattoo, url } )
             })
         )
         console.log(results)
@@ -33,7 +33,7 @@ export class ImageService{
     }
 
     // 이미지 테이블의 url 수정,
-    async update({ tattooId, imgUrls }){
+    async update({ tattooId, urls }){
         await this.tattooRepository.softDelete({ tattooId : tattooId })
 
         const tattoo = await this.tattooRepository.findOne({ 
@@ -41,7 +41,7 @@ export class ImageService{
         })
         const results = 
         await Promise.all(
-            imgUrls.map( url => { this.imageRepository.save( { tattoo, url } )
+            urls.map( url => { this.imageRepository.save( { tattoo, url } )
             })
         )
         console.log(results)

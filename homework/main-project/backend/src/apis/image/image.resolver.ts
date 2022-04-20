@@ -12,9 +12,9 @@ export class ImageResolver{
     @Mutation( ()=> [ String ] )
     async addImgUrl(
         @Args('tattooId') tattooId: string,
-        @Args( { name: 'imgUrls', type: () => [ String ] } ) imgUrls: string[]
+        @Args( { name: 'urls', type: () => [ String ] } ) urls: string[]
     ){
-        return await this.imageService.add({ tattooId , imgUrls })
+        return await this.imageService.add({ tattooId , urls })
     }
 
 
@@ -22,9 +22,9 @@ export class ImageResolver{
     @Mutation( () => [String] )
     async updateImgUrl(
         @Args('tattooId') tattooId: string,
-        @Args( { name: 'imgUrls', type:()=> [ String ] } ) imgUrls: string[]
+        @Args( { name: 'urls', type:()=> [ String ] } ) urls: string[]
     ){
-        return await this.imageService.update({ tattooId, imgUrls })
+        return await this.imageService.update({ tattooId, urls })
     }
     
 }

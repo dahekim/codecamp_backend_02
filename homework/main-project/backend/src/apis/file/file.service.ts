@@ -29,7 +29,7 @@ export class FileService{
             })
         )
         console.log(results)
-        console.log("⭕️ 파일 업로드 완료")
+        console.log("⭕️ 파일 넘길게")
         return results
         
     }
