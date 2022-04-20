@@ -10,11 +10,11 @@ interface IFile{
 @Injectable()
 export class FileService{
     async upload( {files} : IFile ){
-        const myBucket = "main-project-dahe"
+        const myBucket = process.env.GCP_BUCKET_LOCATION
         const storage = new Storage({
-            keyFilename: "valiant-student-347011-de22dbda86a7.json",
-            projectId: "valiant-student-347011"
-        }).bucket("main-project-dahe")
+            keyFilename: process.env.GCP_KEY_FILENAME,
+            projectId: process.env.GCP_PROJECT_ID,
+        }).bucket(myBucket)
 
         const waitedFiles = await Promise.all(files)
 

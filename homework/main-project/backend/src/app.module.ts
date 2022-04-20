@@ -12,6 +12,7 @@ import { UserModule } from './apis/users/users.module';
 import { AuthModule } from './apis/auth/auth.module';
 import { TransactionModule } from './apis/transaction/transaction.module';
 import { FileModule } from './apis/file/file.module';
+import { ImageModule } from './apis/image/image.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { FileModule } from './apis/file/file.module';
     BodypartModule,
     FileModule,
     GenreModule,
+    ImageModule,
     LocationModule,
     TattooModule,
     TypeModule,

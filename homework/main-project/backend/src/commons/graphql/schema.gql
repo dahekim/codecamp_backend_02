@@ -55,8 +55,14 @@ type TattooGenre {
   name_genre: String!
 }
 
+type Image {
+  id_img: String!
+  url: String!
+  tattooId: Tattoo!
+}
+
 type Tattoo {
-  id_tattoo: String!
+  tattooId: String!
   name_tattoo: String!
   date_tattoo: String!
   desc_tattoo: String!
@@ -67,6 +73,7 @@ type Tattoo {
   design: Design!
   method: Method!
   users: Users!
+  imgUrl: Image!
   bodypart: Bodypart!
   tattoolocation: TattooLocation!
   tattooType: TattooType!

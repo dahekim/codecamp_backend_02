@@ -85,12 +85,6 @@ export class Tattoo {
   users: Users;
 
   // 1:N
-  // 타투 이미지 테이블
-  @ManyToOne(() => Image)
-  @Field(()=> Image)
-  imgUrl: Image 
-
-  // 1:N
   // 신체부위 및 타투 사이즈 테이블
   @ManyToOne(() => Bodypart)
   @Field(() => Bodypart)

@@ -1,6 +1,11 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Tattoo } from "src/apis/tattoo/entities/tattoo.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { 
+    Column, 
+    Entity, 
+    PrimaryGeneratedColumn, 
+    JoinColumn, 
+    ManyToOne } from "typeorm";
 
 @Entity()
 @ObjectType()
@@ -10,10 +15,11 @@ export class Image {
     id_img: string
 
     @Column()
-    @Field(() => String)
-    url: string
+    @Field(() => String, { nullable: true })
+    url?: string
 
-    @Column(() => Tattoo)
-    @Field(() => Tattoo)
-    tattooId: Tattoo
+    @JoinColumn()
+    @ManyToOne(()=> Tattoo)
+    @Field(() => Tattoo, { nullable: false })
+    tattooId?: Tattoo
 }
