@@ -26,7 +26,6 @@ export class Product {
     @Field(()=> Int)
     price: number
 
-
     // 기본값을 false로 지정해본다
     // MySQL에 들어가는 디폴트 값 설정 ( @Column( {default : false} ) )
     @Column( {default : false} )
@@ -62,8 +61,7 @@ export class Product {
 
     @JoinColumn()
     @OneToOne( ()=> ProductSaleslocation )
-    @Field(()=> ProductSaleslocation)
-    
+    @Field(()=> ProductSaleslocation)    
     productSaleslocation: ProductSaleslocation
 
 
