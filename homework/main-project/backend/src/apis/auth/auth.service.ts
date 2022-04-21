@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../users/users.service';
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { UserService } from '../users/users.service'
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,9 @@ export class AuthService {
     );
     // 개발환경
     res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    console.log ("🍪 refreshToken 입니다🍪 " )
     console.log(refreshToken);
+    console.log ("🍪 refreshToken 입니다🍪 " )
 
     // 배포환경
     // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')

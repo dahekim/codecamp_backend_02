@@ -110,6 +110,7 @@ type Query {
 
 type Mutation {
   login(email_user: String!, password: String!): String!
+  logout: String!
   restoreAccessToken: String!
   createBodypart(name: String!, size: String!): Bodypart!
   uploadFile(files: [Upload!]!): [String!]!

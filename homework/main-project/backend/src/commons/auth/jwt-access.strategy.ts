@@ -11,7 +11,8 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
       // auth.service.ts/getAccessToken() 에서 secret 값으로 입력했던 내용 넣음
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'myAccessToken',
-    });
+      passReqTocCallback: true,
+    })
   }
 
   // 2. 검증 완료 시 validate 실행, 이메일과 id(sub으로 설정했던 것)를 payload로 넘겨줌
