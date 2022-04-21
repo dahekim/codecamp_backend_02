@@ -1,5 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -13,6 +13,9 @@ import { AuthModule } from './apis/auth/auth.module';
 import { TransactionModule } from './apis/transaction/transaction.module';
 import { FileModule } from './apis/file/file.module';
 import { ImageModule } from './apis/image/image.module';
+
+import type { RedisClientOptions } from 'redis'
+import * as redisStore from 'cache-manager-redis-store'
 
 @Module({
   imports: [
@@ -35,18 +38,24 @@ import { ImageModule } from './apis/image/image.module';
 
     TypeOrmModule.forRoot({
       type: 'mysql',
-      //host: 'my-database',
-      host: 'localhost',
+      host: 'my-database',
+      // host: 'localhost',
       port: 3306,
       username: 'root',
-      //password: 'root',
-      password: 'qwer1234',
-      //database: 'mydocker02',
-      database: 'myproject02',
+      password: 'root',
+      // password: 'qwer1234',
+      database: 'mydocker02',
+      // database: 'myproject02',
       entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,
       logging: true,
     }),
+
+    CacheModule.register<RedisClientOptions>({
+        store: redisStore,
+        url: 'redis://my-redis:6379',
+        isGlobal:true,
+    })
   ],
 })
 export class AppModule {}
