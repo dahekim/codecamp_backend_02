@@ -1,6 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common"
 import { Storage } from '@google-cloud/storage'
 import { FileUpload } from 'graphql-upload'
+import { v4 as uuidv4 } from 'uuid'
+import { getToday } from "src/commons/libraries/utils"
 
 // files에 대한 타입을 IFile로 생성
 interface IFile{
@@ -20,10 +22,11 @@ export class FileService{
 
         const results 
         = await Promise.all(
-            waitedFiles.map( el => {
+            waitedFiles.map( ele => {
                 return new Promise( (resolve, reject) => {
-                    el.createReadStream().pipe(storage.file(el.filename).createWriteStream ())
-                    .on( "finish" , () => resolve (`${myBucket}/${el.filename}`) )
+                    const fname = `${getToday()}/${uuidv4()}/origin/${ele.filename}`
+                    ele.createReadStream().pipe(storage.file(fname).createWriteStream ())
+                    .on( "finish" , () => resolve (`${myBucket}/${fname}`) )
                     .on( "error" , () =>reject() )
                 })
             })
