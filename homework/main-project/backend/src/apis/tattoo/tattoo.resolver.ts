@@ -19,29 +19,44 @@ export class TattooResolver {
 
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache
-
     ) {}
   
   // 타투 전체 목록 조회
   @Query( ()=> [Tattoo] )
   async fetchTattoos(@Args('search') search: string) {
-    console.log(`${search}`)
-    const isCache = await this.elasticsearchService.search({
+    // 1. Redis에 해당 검색결과가 있는지 확인
+    // 초기값은 undefined, 검색 이력이 없다면(=Redis에 없다면) 바로 3-1.로 넘어간다
+    const resultArr = []
+    const inRedis = await this.cacheManager.get(`name_tattoo:${search}`)
+    const inElastic = await this.elasticsearchService.search({
       index: "mytattoo",
-      query: {
-        match_all: {},
-      },
+      query: { prefix : { "name_tattoo" : search } },
     })
 
-    // 캐싱결과가 없을 경우
-    if (!isCache.hits.hits){
+    // 2. Redis에 해당 검색결과가 있다면 결과를 클라이언트에 반환    
+    if(inRedis) {
+      console.log("🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑")
+      console.log("🛑🛑🛑🛑🛑 Redis에 있던 검색 결과를 반환합니다. 🛑🛑🛑🛑")
+      console.log(`Redis 값 : ${inRedis}`)
+      console.log("🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑")
+      return inRedis
+    }
 
-    }
-    // 캐싱결과가 있을 경우 결과를 클라이언트에 반환
+    // 3-1. Redis에 해당 검색결과가 없다면 해당 검색어를 ElasticSearch에서 검색
     else {
-      console.log(JSON.stringify(isCache, null, ' '))
-      return this.tattooService.findAll();
-    }
+      for (let i = 0 ; i < inElastic.hits.total['value']; i++){
+        resultArr.push(inElastic.hits.hits[i]['_source'])
+      }
+      // 3-2. 조회 결과를 Redis에 저장
+      // 3-3. 조회결과([Product])를 클라이언트에 반환
+      await this.cacheManager.set( `name_tattoo:${search}`, inElastic , { ttl: 0 } )
+      console.log("👻👻👻👻👻 ElasticSearch에 있는 결과를 가져왔습니다. 👻👻👻👻👻")
+      console.log(JSON.stringify(resultArr, null, ''))
+      console.log("👻👻👻👻👻 ElasticSearch에 있는 결과를 가져왔습니다. 👻👻👻👻👻")
+      return resultArr      
+    }    
+    // console.log(JSON.stringify(inElastic, null, ' '))
+    // return this.tattooService.findAll();
   }
 
   // 삭제 데이터 포함한 전체 목록 조회

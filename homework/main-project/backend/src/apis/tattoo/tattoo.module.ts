@@ -11,7 +11,7 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch'
 @Module({
   imports: [ TypeOrmModule.forFeature( [ Tattoo, Design, Method, TattooTag ] ),
   ElasticsearchModule.register({
-    node: "http://elasticsearch:9200"
+    node: "http://elasticsearch:9200",
 })
 ],
 
