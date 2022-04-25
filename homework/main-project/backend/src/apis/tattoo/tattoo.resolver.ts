@@ -7,7 +7,9 @@ import { Tattoo } from './entities/tattoo.entity'
 import { TattooService } from './tattoo.service'
 
 import { ElasticsearchService } from '@nestjs/elasticsearch'
+import { Cache } from 'cache-manager'
 import { CACHE_MANAGER, Inject } from '@nestjs/common'
+
 
 @Resolver()
 export class TattooResolver {
@@ -21,16 +23,25 @@ export class TattooResolver {
     ) {}
   
   // 타투 전체 목록 조회
-  @Query( () => [Tattoo] )
-  async fetchTattoos() {
-    const result = await this.elasticsearchService.search({
+  @Query( ()=> [Tattoo] )
+  async fetchTattoos(@Args('search') search: string) {
+    console.log(`${search}`)
+    const isCache = await this.elasticsearchService.search({
       index: "mytattoo",
       query: {
         match_all: {},
       },
     })
-    console.log(JSON.stringify(result, null, ' '))
-    // return this.tattooService.findAll();
+
+    // 캐싱결과가 없을 경우
+    if (!isCache.hits.hits){
+
+    }
+    // 캐싱결과가 있을 경우 결과를 클라이언트에 반환
+    else {
+      console.log(JSON.stringify(isCache, null, ' '))
+      return this.tattooService.findAll();
+    }
   }
 
   // 삭제 데이터 포함한 전체 목록 조회

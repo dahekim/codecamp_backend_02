@@ -101,10 +101,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  fetchTattoos: [Tattoo!]!
+  fetchTattoos(search: String!): [Tattoo!]!
   fetchTattoosWithDel(tattooId: String!): [Tattoo!]!
   fetchTattoo(tattooId: String!): Tattoo!
   fetchUser: Users!
+  fetchUsers: Users!
   updatePassword(password: String!): Users!
 }
 

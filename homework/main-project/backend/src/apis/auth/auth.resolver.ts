@@ -17,8 +17,8 @@ import * as jwt from 'jsonwebtoken'
 
 import { AuthService } from './auth.service'
 import { UserService } from '../users/users.service'
-import { getToday } from 'src/commons/libraries/utils.js'
-import { auth } from 'google-auth-library'
+import { getToday } from 'src/commons/libraries/utils'
+// import { auth } from 'google-auth-library'
 
 
 @Resolver()

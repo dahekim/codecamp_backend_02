@@ -8,6 +8,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   JoinTable,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import { Design } from 'src/apis/design/entities/design.entity';
@@ -110,6 +111,9 @@ export class Tattoo {
   // 삭제 여부, 삭제를 하지 않았다면 기본 Null값을 가지고 삭제가 되었다면 삭제가 된 시간으로 업데이트
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date
 
   @JoinTable()
   @ManyToMany(()=> TattooTag, (tattooTags) => tattooTags.tattoos)

@@ -38,6 +38,7 @@ export class TattooService {
       ],
     });
   }
+  
   async findOne({ tattooId }) {
     return await this.tattooRepository.findOne({
       where: { tattooId: tattooId },
