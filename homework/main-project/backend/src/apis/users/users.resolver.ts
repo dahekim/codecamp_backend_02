@@ -10,11 +10,6 @@ import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-//   @Mutation(() => Users)
-//   createLocation(@Args('nickname_user') nickname_user: string) {
-//     return this.userService.create({ nickname_user });
-//   }
-
 // 회원생성
   @Mutation(() => Users)
   async createUser(
@@ -22,14 +17,14 @@ export class UserResolver {
     @Args('password') password: string,
     @Args('nickname') nickname_user: string,
     @Args('birth') birth_user: number,
-    // @Args('description') desc_user: string,
   )
   {
     const hashedPassword = await bcrypt.hash(password, 10).then(res => res)
     return this.userService.create({ 
       nickname_user, 
-      birth_user, email_user, hashedPassword, 
-      //desc_user, 
+      birth_user, 
+      email_user, 
+      hashedPassword, 
     })
   }
 
@@ -41,6 +36,12 @@ export class UserResolver {
   ){
     console.log("회원조회가 완료되었습니다.")
     return await this.userService.findOne ({ email_user : currentUser.email_user  })
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Query( () => Users)
+  async fetchUsers(){
+    return await this.userService.findAll();
   }
 
   // 비밀번호 변경
@@ -64,4 +65,9 @@ export class UserResolver {
       console.log("회원삭제가 완료되었습니다.")
       return await this.userService.delete({email_user : currentUser.email_user})
     }
+
+  // @Mutation(() => Users)
+  // createLocation(@Args('nickname_user') nickname_user: string) {
+  //   return this.userService.create({ nickname_user });
+  // }
 }

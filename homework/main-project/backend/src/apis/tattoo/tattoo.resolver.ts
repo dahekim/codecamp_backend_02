@@ -1,18 +1,36 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
-import { CreateTattooInput } from './dto/createTattoo.input';
-import { UpdateTattooInput } from './dto/updateTattoo.input';
+import { CreateTattooInput } from './dto/createTattoo.input'
+import { UpdateTattooInput } from './dto/updateTattoo.input'
 
-import { Tattoo } from './entities/tattoo.entity';
-import { TattooService } from './tattoo.service';
+import { Tattoo } from './entities/tattoo.entity'
+import { TattooService } from './tattoo.service'
+
+import { ElasticsearchService } from '@nestjs/elasticsearch'
+import { CACHE_MANAGER, Inject } from '@nestjs/common'
 
 @Resolver()
 export class TattooResolver {
-  constructor(private readonly tattooService: TattooService) {}
+  constructor(
+    private readonly tattooService: TattooService,
+    private readonly elasticsearchService: ElasticsearchService,
+
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache
+
+    ) {}
+  
   // 타투 전체 목록 조회
-  @Query(() => [Tattoo])
-  fetchTattoos() {
-    return this.tattooService.findAll();
+  @Query( () => [Tattoo] )
+  async fetchTattoos() {
+    const result = await this.elasticsearchService.search({
+      index: "mytattoo",
+      query: {
+        match_all: {},
+      },
+    })
+    console.log(JSON.stringify(result, null, ' '))
+    // return this.tattooService.findAll();
   }
 
   // 삭제 데이터 포함한 전체 목록 조회

@@ -25,6 +25,7 @@ export class TattooService {
 
   async findAll() {
     return await this.tattooRepository.find({
+      withDeleted:true, 
       relations: [
         'method',
         'design',

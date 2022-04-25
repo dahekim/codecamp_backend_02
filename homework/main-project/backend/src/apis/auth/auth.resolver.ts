@@ -17,6 +17,8 @@ import * as jwt from 'jsonwebtoken'
 
 import { AuthService } from './auth.service'
 import { UserService } from '../users/users.service'
+import { getToday } from 'src/commons/libraries/utils.js'
+import { auth } from 'google-auth-library'
 
 
 @Resolver()
@@ -50,7 +52,7 @@ export class AuthResolver {
     
     // 2-3. 일치하는 유저가 있다면 그 유저를 위한 Access Token(=JWT) 만들어서 프론트엔드에 전달
     // refreshToken(cookie)를 헤더에 담아서 전달 
-    this.authService.setRefreshToken({ user, res: context.res})
+    this.authService.setRefreshToken({ user, res: context.res })
     return this.authService.getAccessToken({ user });
   }
   @UseGuards(GqlAuthRefreshGuard)
@@ -65,11 +67,19 @@ export class AuthResolver {
     const authAt = jwt.verify(accessToken, "myAccessToken" )
     const authRt = jwt.verify(refreshToken, "myRefreshToken")
 
+    const present = Date.parse(getToday()) / 1000
+
     try{
-      await this.cacheManager.set( `accessToken:${accessToken}`, accessToken, {ttl: -1} )
-      await this.cacheManager.set( `refreshToken:${refreshToken}`, refreshToken, {ttl: -1} )
+      await this.cacheManager.set( `accessToken:${accessToken}`, accessToken, {
+        ttl: typeof authAt === 'object' ? authAt.exp - present : -1 } )
+      await this.cacheManager.set( `refreshToken:${refreshToken}`, refreshToken, {
+        ttl: typeof authRt === 'object' ? authRt.exp - present : -1 } )
     } catch (error){
-      throw new UnauthorizedException("❌ 토큰값이 일치하지 않습니다.")
+      if (error?.response?.data?.message){
+        throw new UnauthorizedException("❌ 토큰값이 일치하지 않습니다.")
+      } else {
+        throw error
+      }
     }
     return "⭕️ 로그아웃 성공!"
   }
