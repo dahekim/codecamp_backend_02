@@ -27,7 +27,7 @@ export class TattooResolver {
     // 1. Redis에 해당 검색결과가 있는지 확인
     // 초기값은 undefined, 검색 이력이 없다면(=Redis에 없다면) 바로 3-1.로 넘어간다
     const resultArr = []
-    const inRedis = await this.cacheManager.get(`name_tattoo:${search}`)
+    const inRedis = await this.cacheManager.get(search)
     const inElastic = await this.elasticsearchService.search({
       index: "mytattoo",
       query: { prefix : { "name_tattoo" : search } },
@@ -49,7 +49,7 @@ export class TattooResolver {
       }
       // 3-2. 조회 결과를 Redis에 저장
       // 3-3. 조회결과([Product])를 클라이언트에 반환
-      await this.cacheManager.set( `name_tattoo:${search}`, inElastic , { ttl: 0 } )
+      await this.cacheManager.set( search , inElastic , { ttl: 0 } )
       console.log("👻👻👻👻👻 ElasticSearch에 있는 결과를 가져왔습니다. 👻👻👻👻👻")
       console.log(JSON.stringify(resultArr, null, ''))
       console.log("👻👻👻👻👻 ElasticSearch에 있는 결과를 가져왔습니다. 👻👻👻👻👻")
