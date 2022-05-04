@@ -9,6 +9,8 @@ import { UserModule } from './apis/users/user.module.js';
 import { AuthModule } from './apis/auth/auth.module.js';
 import { PointTransactionModule } from './apis/pointTransaction/pointTransaction.module.js';
 import { FileModule } from './apis/file/file.module'
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service';
 
 @Module({
     imports: [
@@ -29,17 +31,19 @@ import { FileModule } from './apis/file/file.module'
         
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'my-database-02',
-            // host: '10.85.16.3',
+            // host: 'my-database-02',
+            host: '10.85.16.3',
             port: 3306,
             username: 'root',
             password: 'root',
-            database: 'mypod02',
-            // database: 'myserver02',
+            // database: 'mypod02',
+            database: 'myserver02',
             entities: [__dirname+ '/apis/**/*.entity.*'],
             synchronize: true,
             logging: true,
         }),
     ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}
