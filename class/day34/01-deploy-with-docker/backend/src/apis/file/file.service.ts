@@ -10,13 +10,13 @@ interface IFile{
 @Injectable()
 export class FileService{
     async upload( { files } : IFile ){
-        const bucketName = process.env.GCP_MY_BUCKET
+        // const bucketName = process.env.GCP_MY_BUCKET
         // 스토리지에 파일 저장
         const storage = new Storage({
-            keyFilename: process.env.GCP_KEY_FILENAME,
-            projectId: process.env.GCP_PROJECT_ID,
+            keyFilename: "/my-secret/gcp-file-storage.json",
+            projectId: "valiant-student-347011",
         })
-        .bucket(process.env.GCP_MY_BUCKET)
+        .bucket("dahehehe")
         
         // 일단 먼저 다 받기
         const waitedFiles = await Promise.all(files)
@@ -28,8 +28,8 @@ export class FileService{
                 return new Promise((resolve, reject)=> {
                     el.createReadStream()
                     .pipe( storage.file(el.filename).createWriteStream() )
-                    .on( "finish" , () => resolve( `${bucketName}/${el.filename}` ) )
-                    .on( "error" , () => reject() )
+                    .on( "finish" , () => resolve( "완료!!!!" ) )
+                    .on( "error" , (error) => reject(error) )
                 })
             })
         )

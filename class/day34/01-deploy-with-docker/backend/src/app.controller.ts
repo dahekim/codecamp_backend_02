@@ -7,6 +7,9 @@ export class AppController {
 
     @Get('/')
     getHello(): string {
+        console.log("ㅡㅡ")
+        console.log("악악")
+        console.log("짜증!")
         return this.appService.aaa();
     }
 }

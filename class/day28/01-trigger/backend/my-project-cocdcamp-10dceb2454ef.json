@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "my-project-cocdcamp",
+  "private_key_id": "10dceb2454ef770f211917a23aab769cf1514d23",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCTIv2pT0UEsol0\nG0uHL2Y5kJHlksMYn+bkGIKcsf/LYId9UFOuGlP8ZxPfr2AyeG+Ipeq3bjsRLAZv\nKh0KDsKyf25UU6ZuPNIj2bdy8zPLkq1t4P7Q/a/vuaZSW95tKTCh1ZhZ25f0ty+n\nWbV5YKV9w8Zgg5kNwHrhD9HfWDN7gcYdCE2t3aRkiC5MDK+IwMzY8syArfZ1SoEc\nxRrwVGuVXMgteCijU6k3B9cI6jU9eN5alZfiQt9lEpC7WxqkALjKGjNdeMMIlTRS\nBnW6eh6rGXb55b29UMI8cjG/xc9XRTyprUUXTIEAvS0/Z5zd5bCnkiDixI9sZ1ri\n39nofWCjAgMBAAECggEABIE5P/JH3C11LONbDCAE4rVM6jj0lS/sG0au1QpUGQ9z\nBoCrlzSCJsOnJZ2SdekfDRF7XrNWxp9Q8R1ad0DdcCabo6RN/6kIDAXx6miMyOpM\nOgV997sUpGPMNlBOvovYy9Okzvd8rwbexCJofndZicCxNapByNyARpy74bkrFlhm\nbEtwR54RYe/lBYmLzZ0H9yMM0ALjaVUd8O4YFneGuUgLVqC94ivuspui0tBGt8T8\nzCW817FxfJoU6UhIzN+M9CSwSRtN1wn5ivAcKM6Fp9d2y0sqsgJji465zUXQv7+/\nyrORMZeYQxi8jL7YEkumnbNaiMPW6hH5RsJGqyVqYQKBgQDEjHoMGTWbJWOyc5cl\nV0SWnJc+rzQeeVVXZ70EGEDBNsg7ASOGQj3wbfpbpo4a/3OBvDtTi4j6cChTjP5K\noRWWdHqhMdIg0DuXK0dJ2SM4btLVnmApnsL1JpHN6Ym8/8pejvHnXWHR+GJp/Z9b\ni9brr7HRJRxxIece3iu+w0ixAwKBgQC/pFlc0CFu/s3bzGTIXu0+D5K9t/8+eIqH\ny5wWAchdpsJnMc56EsVcFuakFyKvYjqewR15S6dOyHFZpmU4/njW+HfF/wxjyYCE\nWN5KMT+erW3IHE7o4Jm5MGE0kRGE57clfqYzSKXeuaJybxauAWU4QrV6BS81VOnU\ntVa5Csjv4QKBgELuy8k+9IBnFTJ6JqiytUrM/Lx+EbOnAicHztiMIdEqhLmDQ8O+\n3zT3XuDDMXWENKOjpFhpFjai5zi8tQRZIu7fr7shKju+beym8ln1tgbLxsS0cG77\n/8xYXCLROvS/7vyQlVSC+oL0oR8THaehUYllhZqBltP4Bar/YcpO2nxdAoGAH26Y\nTZXBdhAKuZs7iHWxWbV6Lu3HynpA1mb50c43C803I2/S2sjLYABNkepNgRCOZs1r\nxSI4bb6IgNi+z2tFbJTSKEJdyNwa3RoqU2bidWcik2i5NI7qB6q8tr94bSEIM/ki\nz1SCCBbQYw5/XMjTzjd6xmmlRY0I0R9w+uae8GECgYBNaykYIOw3z3q2PdLNbXDO\n3yi8OEHC+0638qTivp6mZE+DeklHwiKRpQJ/R1Z3qWA8qp3tUmiaMH8t36uGIZRS\nITt6yBRBZJj7IIYYtfS9m/VAYWsdzYHne+xOFHmD1mNpCok8afwdxU16KtfUCAsr\n4wnIWRjEeexlnSJVBE8mlQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dahekim@my-project-cocdcamp.iam.gserviceaccount.com",
+  "client_id": "108794661577810642744",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dahekim%40my-project-cocdcamp.iam.gserviceaccount.com"
+}

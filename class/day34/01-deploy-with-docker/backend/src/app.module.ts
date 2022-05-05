@@ -9,6 +9,7 @@ import { UserModule } from './apis/users/user.module.js';
 import { AuthModule } from './apis/auth/auth.module.js';
 import { PointTransactionModule } from './apis/pointTransaction/pointTransaction.module.js';
 import { FileModule } from './apis/file/file.module'
+
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service';
 
